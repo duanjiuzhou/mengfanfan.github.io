@@ -1,0 +1,321 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>满足大屏场景的拖拽组件原理说明 | 孟饭饭的独立博客</title>
+<link rel="shortcut icon" href="https://duanjiuzhou.github.io/mengff.github.io//favicon.ico?v=1590114584740">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://duanjiuzhou.github.io/mengff.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="满足大屏场景的拖拽组件原理说明 | 孟饭饭的独立博客 - Atom Feed" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="✍️ 源于大屏场景下，由于进行适配页面尺寸，随着页面尺寸的频繁变化，导致拖拽组件的定位失效，引起拖拽异常......
+
+场景🦄
+组件需要满足功能：
+
+基本PC端拖拽功能；
+适配屏幕尺寸变化；
+支持传入组件的定位top, left；（防止突..." />
+    <meta name="keywords" content="组件解析" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://duanjiuzhou.github.io/mengff.github.io/">
+  <img class="avatar" src="https://duanjiuzhou.github.io/mengff.github.io//images/avatar.png?v=1590114584740" alt="">
+  </a>
+  <h1 class="site-title">
+    孟饭饭的独立博客
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              满足大屏场景的拖拽组件原理说明
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-05-22
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://duanjiuzhou.github.io/mengff.github.io/tag/HUBXlVT1z/" class="post-tag">
+                  # 组件解析
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://duanjiuzhou.github.io/mengff.github.io//post-images/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming.gif" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>✍️ 源于大屏场景下，由于进行适配页面尺寸，随着页面尺寸的频繁变化，导致拖拽组件的定位失效，引起拖拽异常......</p>
+<!-- more -->
+<h3 id="场景">场景🦄</h3>
+<p><strong>组件需要满足功能：</strong></p>
+<ul>
+<li>基本PC端拖拽功能；</li>
+<li>适配屏幕尺寸变化；</li>
+<li>支持传入组件的定位<code>top, left</code>；（防止突发性页面尺寸比例变化，拖拽组件定位失效）</li>
+</ul>
+<h3 id="拖拽原理">拖拽原理</h3>
+<h4 id="所需事件">所需事件</h4>
+<ul>
+<li>onMousedown</li>
+<li>onMouseup</li>
+<li>onMousemove</li>
+</ul>
+<h4 id="原理说明">原理说明</h4>
+<h5 id="原理图">原理图🍥</h5>
+<figure data-type="image" tabindex="1"><img src="https://duanjiuzhou.github.io/mengff.github.io//post-images/1590112364894.png" alt="" loading="lazy"></figure>
+<h5 id="状态参数">状态参数</h5>
+<pre><code>const dragData = 
+{
+    // x偏移值
+    offsetX: 0,
+    // y偏移值
+    offsetY: 0,
+    // 是否开始拖拽
+    isDrag: false,
+    // 当前组件距离当前窗口x轴的距离
+    distanceX: 0,
+    // 当前组件距离当前窗口y轴的距离
+    distanceY: 0,
+    // 组件top定位
+    top: 0,
+    // 组件left定位
+    left: 0,
+}
+</code></pre>
+<h5 id="步骤">步骤</h5>
+<blockquote>
+<p>第一步</p>
+</blockquote>
+<p>鼠标移动到组件可触发区域，鼠标按下，触发<code>onMousedown</code>事件，记录鼠标点击位置，开启拖动</p>
+<pre><code>// 记录鼠标点击位置
+dragData.distanceX = e.clientX
+dragData.distanceY = e.clientY
+// 开启拖动
+ dragData.isDrag = true
+</code></pre>
+<blockquote>
+<p>第二步</p>
+</blockquote>
+<p>鼠标移动，触发<code>onMousemove</code>事件，判断<code>dragData.isDrag</code>是否为真，为假跳出执行，为真继续执行。通过计算移动的距离，获取当前组件位置，算出最新位置，对组件进行更新位置信息。并记录当前组件距离当前窗口的距离、此时的偏移位置；</p>
+<p><strong>计算移动的距离：</strong></p>
+<p>计算移动的距离 = 本次距离当前窗口移动距离 - 上次距离当前窗口移动距离 + 上一次移动距离</p>
+<pre><code>const moveDistanceX = e.clientX - distanceX + offsetX
+const moveDistanceY = e.clientY - distanceY + offsetY
+</code></pre>
+<p><strong>获取最新位置：</strong></p>
+<p>不带页面缩放：</p>
+<p>最新位置 = 当前组件的位置 + 移动的距离</p>
+<p>带页面缩放：</p>
+<p>最新位置 = 当前组件的位置 + 移动的距离/页面缩放系数</p>
+<pre><code>const _left = left + moveDistanceX / scaleX
+const _top = top + moveDistanceY / scaleY
+</code></pre>
+<p><strong>更新组件位置信息：</strong></p>
+<pre><code>el.style.left = _left + 'px'
+el.style.top = _top + 'px'
+</code></pre>
+<p><strong>记录状态：</strong></p>
+<p>记录当前组件距离当前窗口的距离：</p>
+<pre><code>dragData.distanceX = e.clientX
+dragData.distanceY = e.clientY
+</code></pre>
+<p>记录当前偏移位置</p>
+<pre><code>dragData.offsetX = moveDistanceX
+dragData.offsetY = moveDistanceY
+</code></pre>
+<blockquote>
+<p>第三步</p>
+</blockquote>
+<p>鼠标抬起，触发<code>onMouseup</code>事件，关闭拖动；</p>
+<pre><code>dragData.isDrag = false
+</code></pre>
+<h3 id="适配屏幕尺寸变化">适配屏幕尺寸变化</h3>
+<h4 id="场景-2">场景</h4>
+<p>用户控制屏幕，使屏幕尺寸发送变化，使拖拽组件保存的定位信息过期，导致拖拽异常。</p>
+<h4 id="所需事件-2">所需事件</h4>
+<ul>
+<li>onResize</li>
+</ul>
+<h4 id="原理说明-2">原理说明</h4>
+<p>向<code>window</code>绑定<code>resize</code>事件，监控页面尺寸变化，当尺寸发生变化，或者最新组件定位，清空保存的定位状态信息。</p>
+<pre><code>const { left, top } = el.style
+const _top = +top.replace(/px/, '')
+const _left = +left.replace(/px/, '')
+dragData = {
+   offsetX: 0,
+   offsetY: 0,
+   isDrag: false,
+   distanceX: 0,
+   distanceY: 0,
+   top: _top,
+   left: _left,
+}
+</code></pre>
+<h3 id="突发性页面尺寸比例变化定位修复">突发性页面尺寸比例变化定位修复</h3>
+<h4 id="场景-3">场景</h4>
+<p>没有通过<code>resize</code>事件触发的页面尺寸变化，通过修改页面宽高等导致页面尺寸变化，这时组件定位不准，需要恢复同比例下组件定位，并保证组件拖拽无异常。</p>
+<h4 id="条件">条件</h4>
+<p>页面原始宽高，变化后页面宽高</p>
+<h4 id="方案">方案</h4>
+<p>根据页面比例，计算出最新组件位置，对组件进行更新位置信息，并清空保存的定位状态信息。</p>
+<p>页面比例 = 页面原始宽高 / 变化后页面宽高</p>
+<p>最新组件位置 = 当前组件位置 / 页面比例</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%9C%BA%E6%99%AF">场景🦄</a></li>
+<li><a href="#%E6%8B%96%E6%8B%BD%E5%8E%9F%E7%90%86">拖拽原理</a>
+<ul>
+<li><a href="#%E6%89%80%E9%9C%80%E4%BA%8B%E4%BB%B6">所需事件</a></li>
+<li><a href="#%E5%8E%9F%E7%90%86%E8%AF%B4%E6%98%8E">原理说明</a>
+<ul>
+<li><a href="#%E5%8E%9F%E7%90%86%E5%9B%BE">原理图🍥</a></li>
+<li><a href="#%E7%8A%B6%E6%80%81%E5%8F%82%E6%95%B0">状态参数</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4">步骤</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E9%80%82%E9%85%8D%E5%B1%8F%E5%B9%95%E5%B0%BA%E5%AF%B8%E5%8F%98%E5%8C%96">适配屏幕尺寸变化</a>
+<ul>
+<li><a href="#%E5%9C%BA%E6%99%AF-2">场景</a></li>
+<li><a href="#%E6%89%80%E9%9C%80%E4%BA%8B%E4%BB%B6-2">所需事件</a></li>
+<li><a href="#%E5%8E%9F%E7%90%86%E8%AF%B4%E6%98%8E-2">原理说明</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AA%81%E5%8F%91%E6%80%A7%E9%A1%B5%E9%9D%A2%E5%B0%BA%E5%AF%B8%E6%AF%94%E4%BE%8B%E5%8F%98%E5%8C%96%E5%AE%9A%E4%BD%8D%E4%BF%AE%E5%A4%8D">突发性页面尺寸比例变化定位修复</a>
+<ul>
+<li><a href="#%E5%9C%BA%E6%99%AF-3">场景</a></li>
+<li><a href="#%E6%9D%A1%E4%BB%B6">条件</a></li>
+<li><a href="#%E6%96%B9%E6%A1%88">方案</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
