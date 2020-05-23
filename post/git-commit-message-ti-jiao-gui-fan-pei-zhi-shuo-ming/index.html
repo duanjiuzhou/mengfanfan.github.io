@@ -1,0 +1,322 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Git Commit Message 提交规范配置说明 | 孟饭饭的独立博客</title>
+<link rel="shortcut icon" href="https://duanjiuzhou.github.io/mengff.github.io//favicon.ico?v=1590215935000">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://duanjiuzhou.github.io/mengff.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Git Commit Message 提交规范配置说明 | 孟饭饭的独立博客 - Atom Feed" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167439282-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167439282-1');
+</script>
+
+
+    <meta name="description" content="描述
+针对 git commit log 提交规范问题，需要统一规范，不然很容易造成误解。
+
+Commitizen: 替代你的 git commit
+全局安装
+npm install -g commitizen
+
+项目级安装
+npm ins..." />
+    <meta name="keywords" content="git" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://duanjiuzhou.github.io/mengff.github.io/">
+  <img class="avatar" src="https://duanjiuzhou.github.io/mengff.github.io//images/avatar.png?v=1590215935000" alt="">
+  </a>
+  <h1 class="site-title">
+    孟饭饭的独立博客
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Git Commit Message 提交规范配置说明
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-05-23
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://duanjiuzhou.github.io/mengff.github.io/tag/06LLRDV6O/" class="post-tag">
+                  # git
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://duanjiuzhou.github.io/mengff.github.io//post-images/git-commit-message-ti-jiao-gui-fan-pei-zhi-shuo-ming.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="描述">描述</h2>
+<p>针对 git commit log 提交规范问题，需要统一规范，不然很容易造成误解。</p>
+<!-- more -->
+<h2 id="commitizen-替代你的-git-commit">Commitizen: 替代你的 git commit</h2>
+<h3 id="全局安装">全局安装</h3>
+<pre><code>npm install -g commitizen
+</code></pre>
+<h3 id="项目级安装">项目级安装</h3>
+<pre><code>npm install -D commitizen cz-customizable --dev
+</code></pre>
+<p><code>package.json</code>中配置:</p>
+<pre><code>  &quot;config&quot;: {
+    &quot;commitizen&quot;: {
+      &quot;path&quot;: &quot;node_modules/cz-customizable&quot;
+    }
+  },
+</code></pre>
+<h3 id="配置规则">配置规则</h3>
+<p>.cz-config.js 中写入自定义的配置：</p>
+<pre><code>'use strict'
+
+module.exports = {
+  types: [
+    {
+      value: '💪 WIP',
+      name: '进度: 工作进度',
+    },
+    {
+      value: '✨ feat',
+      name: '功能: 新功能',
+    },
+    {
+      value: '🐞 fix',
+      name: '修复: 修复bug',
+    },
+    {
+      value: '🛠 refactor',
+      name: '重构: 代码重构',
+    },
+    {
+      value: '📚  docs',
+      name: '文档: 只有文档变更',
+    },
+    {
+      value: '🏁  test',
+      name: '测试: 添加一个测试',
+    },
+    {
+      value: '🗯 chore',
+      name: '工具: 没有修改源代码，只是变更构建流程或辅助工具。',
+    },
+    {
+      value: '💅 style',
+      name: '样式: 空格，分号等格式修复。',
+    },
+    {
+      value: '⏪ revert',
+      name: '回滚: 代码回退。',
+    },
+    {
+      value: '🏎  perf',
+      name: '性能: 提升性能。',
+    },
+    {
+      value: '🏗 build',
+      name: '构建: 变更项目构建或外部依赖（例如scopes: webpack、gulp、npm等）',
+    },
+    {
+      value: '🕹 ci',
+      name:
+        '集成: 更改持续集成软件的配置文件和package中的scripts命令，例如scopes: Travis, Circle等',
+    },
+  ],
+  scopes: [],
+  messages: {
+    type: '选择一种你的提交类型:',
+    scope: '选择一个scope (可选):',
+    // used if allowCustomScopes is true
+    customScope: 'Denote the SCOPE of this change:',
+    subject: '短说明:\n',
+    body: '长说明，使用&quot;|&quot;换行(可选)：\n',
+    breaking: '非兼容性说明 (可选):\n',
+    footer: '关联关闭的issue，例如：#31, #34(可选):\n',
+    confirmCommit: '确定提交说明？',
+  },
+  footerPrefix: 'TAPD: ',
+  allowCustomScopes: true,
+  allowBreakingChanges: ['特性', '修复'],
+  skipQuestions: ['scope', 'body', 'footer'],
+}
+</code></pre>
+<p>效果如下：</p>
+<figure data-type="image" tabindex="1"><img src="evernotecid://51D73625-C4C9-446A-B4F3-A332FC822AA9/appyinxiangcom/24946477/ENResource/p159" alt="5ad4a04c69a4eecb2818abc549237d6a.png" loading="lazy"></figure>
+<h3 id="commitlint-校验你的-message">Commitlint: 校验你的 message</h3>
+<p>commitlint: 可以帮助我们 lint commit messages, 如果我们提交的不符合指向的规范, 直接拒绝提交。</p>
+<pre><code>yarn add commitlint-config-cz @commitlint/cli --dev
+</code></pre>
+<p>.commitlintrc.js 中写入:</p>
+<pre><code>module.exports = {
+  extends: [
+    'cz'
+  ],
+  rules: {
+  }
+};
+</code></pre>
+<h3 id="结合-husky">结合 Husky</h3>
+<p>校验 commit message 的最佳方式是结合 git hook, 所以需要配合 Husky。</p>
+<pre><code>npm i husky@next
+</code></pre>
+<p>package.json 中添加:</p>
+<pre><code>&quot;husky&quot;: {
+    &quot;hooks&quot;: {
+      ...,
+      &quot;commit-msg&quot;: &quot;commitlint -e $GIT_PARAMS&quot;
+    }
+  },
+</code></pre>
+<p><a href="https://juejin.im/post/5afc5242f265da0b7f44bee4">参考</a></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0">描述</a></li>
+<li><a href="#commitizen-%E6%9B%BF%E4%BB%A3%E4%BD%A0%E7%9A%84-git-commit">Commitizen: 替代你的 git commit</a>
+<ul>
+<li><a href="#%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85">全局安装</a></li>
+<li><a href="#%E9%A1%B9%E7%9B%AE%E7%BA%A7%E5%AE%89%E8%A3%85">项目级安装</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E8%A7%84%E5%88%99">配置规则</a></li>
+<li><a href="#commitlint-%E6%A0%A1%E9%AA%8C%E4%BD%A0%E7%9A%84-message">Commitlint: 校验你的 message</a></li>
+<li><a href="#%E7%BB%93%E5%90%88-husky">结合 Husky</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://duanjiuzhou.github.io/mengff.github.io/post/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming/">
+              <h3 class="post-title">
+                满足大屏场景的拖拽组件原理说明
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
