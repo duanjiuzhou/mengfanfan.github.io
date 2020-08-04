@@ -1,0 +1,274 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>js 判断数据类型四种方法 | 孟饭饭的独立博客</title>
+<link rel="shortcut icon" href="https://duanjiuzhou.github.io/mengff.github.io//favicon.ico?v=1596535616316">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://duanjiuzhou.github.io/mengff.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="js 判断数据类型四种方法 | 孟饭饭的独立博客 - Atom Feed" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167439282-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167439282-1');
+</script>
+
+
+    <meta name="description" content="鉴于 js 是松散类型的，因此需有一种手段来检测给定变量的数据类型。对此Js 也提供多种方法，但遗憾的是，不同的方法得到的结果参差不齐。
+
+1、typeof
+typeof 是一个操作符，其右侧跟一个一元表达式，并返回这个表达式的数据类型。返..." />
+    <meta name="keywords" content="js" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://duanjiuzhou.github.io/mengff.github.io/">
+  <img class="avatar" src="https://duanjiuzhou.github.io/mengff.github.io//images/avatar.png?v=1596535616316" alt="">
+  </a>
+  <h1 class="site-title">
+    孟饭饭的独立博客
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              js 判断数据类型四种方法
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-04
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://duanjiuzhou.github.io/mengff.github.io/tag/gnriXgPEB/" class="post-tag">
+                  # js
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>鉴于 js 是松散类型的，因此需有一种手段来检测给定变量的数据类型。对此Js 也提供多种方法，但遗憾的是，不同的方法得到的结果参差不齐。</p>
+<!-- more -->
+<h2 id="1-typeof">1、typeof</h2>
+<p>typeof 是一个操作符，其右侧跟一个一元表达式，并返回这个表达式的数据类型。返回的结果用该类型的字符串(全小写字母)形式表示，包括以下 7 种：number、boolean、symbol、string、object、undefined、function 等。</p>
+<pre><code>   typeof ''; // string 有效
+   typeof 1; // number 有效
+   typeof Symbol(); // symbol 有效
+   typeof true; //boolean 有效
+   typeof undefined; //undefined 有效
+   typeof null; //object 无效
+   typeof [] ; //object 无效
+   typeof new Function(); // function 有效
+   typeof new Date(); //object 无效
+   typeof new RegExp(); //object 无效
+</code></pre>
+<h2 id="2-instanceof">2、instanceof</h2>
+<p>instanceof 是用来判断 A 是否为 B 的实例，表达式为：A instanceof B，如果 A 是 B 的实例，则返回 true,否则返回 false。 在这里需要特别注意的是：instanceof 检测的是原型</p>
+<pre><code>   [] instanceof Array; // true
+   {} instanceof Object;// true
+   new Date() instanceof Date;// true
+    
+   function Person(){};
+   new Person() instanceof Person;
+    
+   [] instanceof Object; // true
+   new Date() instanceof Object;// true
+   new Person instanceof Object;// true
+</code></pre>
+<h2 id="3-constructor">3、constructor</h2>
+<p>对象的constructor属性用于返回创建该对象的函数</p>
+<pre><code>   var test=new Array();
+   
+   if (test.constructor==Array)
+   {
+   document.write(&quot;This is an Array&quot;);
+   }
+   if (test.constructor==Boolean)
+   {
+   document.write(&quot;This is a Boolean&quot;);
+   }
+   if (test.constructor==Date)
+   {
+   document.write(&quot;This is a Date&quot;);
+   }
+   if (test.constructor==String)
+   {
+   document.write(&quot;This is a String&quot;);
+   }
+</code></pre>
+<blockquote>
+<p>细节问题：</p>
+</blockquote>
+<ol>
+<li>
+<p>null 和 undefined 是无效的对象，因此是不会有 constructor 存在的，这两种类型的数据需要通过其他方式来判断。</p>
+</li>
+<li>
+<p>函数的 constructor 是不稳定的，这个主要体现在自定义对象上，当开发者重写 prototype 后，原有的 constructor 引用会丢失，constructor 会默认为 Object</p>
+</li>
+</ol>
+<h2 id="4-tostring">4、toString</h2>
+<p>toString() 是 Object 的原型方法，调用该方法，默认返回当前对象的 [[Class]] 。这是一个内部属性，其格式为 [object Xxx] ，其中 Xxx 就是对象的类型。</p>
+<p>对于 Object 对象，直接调用 toString()  就能返回 [object Object] 。而对于其他对象，则需要通过 call / apply 来调用才能返回正确的类型信息。</p>
+<pre><code>    Object.prototype.toString.call('') ;   // [object String]
+    Object.prototype.toString.call(1) ;    // [object Number]
+    Object.prototype.toString.call(true) ; // [object Boolean]
+    Object.prototype.toString.call(Symbol()); //[object Symbol]
+    Object.prototype.toString.call(undefined) ; // [object Undefined]
+    Object.prototype.toString.call(null) ; // [object Null]
+    Object.prototype.toString.call(new Function()) ; // [object Function]
+    Object.prototype.toString.call(new Date()) ; // [object Date]
+    Object.prototype.toString.call([]) ; // [object Array]
+    Object.prototype.toString.call(new RegExp()) ; // [object RegExp]
+    Object.prototype.toString.call(new Error()) ; // [object Error]
+    Object.prototype.toString.call(document) ; // [object HTMLDocument]
+    Object.prototype.toString.call(window) ; //[object global] window 是全局对象 global 的引用
+</code></pre>
+<p>方法：</p>
+<pre><code>export const typeExamine = (value: any) =&gt; {
+  return Reflect.apply(Object.prototype.toString, value, [])
+    .replace(/^\[object\s(\w+)\]$/, &quot;$1&quot;)
+    .toLowerCase();
+};
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-typeof">1、typeof</a></li>
+<li><a href="#2-instanceof">2、instanceof</a></li>
+<li><a href="#3-constructor">3、constructor</a></li>
+<li><a href="#4-tostring">4、toString</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-css-chui-zhi-ju-zhong-ji-qiao-wo-zhi-hui-23-ge-ni-hui-ji-ge/">
+              <h3 class="post-title">
+                【转】CSS垂直居中技巧，我只会23个，你会几个？
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

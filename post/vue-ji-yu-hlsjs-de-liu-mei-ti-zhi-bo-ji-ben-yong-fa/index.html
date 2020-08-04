@@ -1,0 +1,420 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>vue基于hls.js的流媒体直播基本用法 | 孟饭饭的独立博客</title>
+<link rel="shortcut icon" href="https://duanjiuzhou.github.io/mengff.github.io//favicon.ico?v=1596535616316">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://duanjiuzhou.github.io/mengff.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="vue基于hls.js的流媒体直播基本用法 | 孟饭饭的独立博客 - Atom Feed" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167439282-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167439282-1');
+</script>
+
+
+    <meta name="description" content="hls.js是一个实现HTTP Live Streaming客户端的JavaScript库。本篇主要介绍该插件的在vue中基本使用方法。
+
+hls.js 介绍
+hls.js是一个实现HTTP Live Streaming客户端的JavaSc..." />
+    <meta name="keywords" content="插件,vue" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://duanjiuzhou.github.io/mengff.github.io/">
+  <img class="avatar" src="https://duanjiuzhou.github.io/mengff.github.io//images/avatar.png?v=1596535616316" alt="">
+  </a>
+  <h1 class="site-title">
+    孟饭饭的独立博客
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              vue基于hls.js的流媒体直播基本用法
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-04
+              </span>
+              <span>
+                11 min read
+              </span>
+              
+                <a href="https://duanjiuzhou.github.io/mengff.github.io/tag/BOGMhtwbK/" class="post-tag">
+                  # 插件
+                </a>
+              
+                <a href="https://duanjiuzhou.github.io/mengff.github.io/tag/ocPDlIQ9n/" class="post-tag">
+                  # vue
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>hls.js是一个实现HTTP Live Streaming客户端的JavaScript库。本篇主要介绍该插件的在vue中基本使用方法。</p>
+<!-- more -->
+<h2 id="hlsjs-介绍">hls.js 介绍</h2>
+<p><a href="https://github.com/video-dev/hls.js">hls.js</a>是一个实现HTTP Live Streaming客户端的JavaScript库。它依靠HTML5视频和MediaSource扩展进行播放。</p>
+<p>它的工作原理是将MPEG-2传输流和AAC / MP3流转换为ISO BMFF（MP4）片段。如果在浏览器中可用，则可以使用Web Worker异步执行此传输。<code>hls.js</code>也支持<code>HLS+fmp4</code>，正如在<code>WWDC2016</code>期间宣布的那样<code>hls.js</code>不需要任何播放器，它直接在标准的HTML <code>&lt;video&gt;</code>元素之上工作。<code>hls.js</code> 使用<code>ECMAScript6</code>编写，使用<code>Babel</code>在<code>ECMAScript5</code>中编译。</p>
+<h2 id="基本入门">基本入门</h2>
+<pre><code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/hls.js@latest&quot;&gt;&lt;/script&gt;
+&lt;!-- Or if you want a more recent canary version --&gt;
+&lt;!-- &lt;script src=&quot;https://cdn.jsdelivr.net/npm/hls.js@canary&quot;&gt;&lt;/script&gt; --&gt;
+&lt;video id=&quot;video&quot;&gt;&lt;/video&gt;
+&lt;script&gt;
+  var video = document.getElementById('video');
+  if(Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ }
+ // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+ // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+ // This is using the built-in support of the plain video element, without using hls.js.
+ // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
+ // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
+  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
+    video.addEventListener('loadedmetadata',function() {
+      video.play();
+    });
+  }
+&lt;/script&gt;
+</code></pre>
+<h2 id="安装">安装</h2>
+<p>要么直接包含dist / hls.js或dist / hls.min.js</p>
+<p>或者输入</p>
+<pre><code>npm install --save hls.js
+</code></pre>
+<p>可以选择有一个声明文件可用于帮助完成代码并在hls.js api的IDE中提示</p>
+<pre><code>npm install --save-dev @ types / hls.js
+</code></pre>
+<p>npm方式时，在.vue组件中引入</p>
+<pre><code> var Hls = require('hls.js/dist/hls');
+</code></pre>
+<p><strong>注意：</strong></p>
+<p>在vue组件中声明hls实例<code>new Hls()</code>,一定要在组件销毁前注销hls实例，否则会造成内存泄漏（都是坑出来的o(╥﹏╥)o）</p>
+<pre><code>beforeDestroy() {
+    // 注销hls 实例
+    this.hls.destroy();
+},
+</code></pre>
+<h2 id="基本api用法">基本api用法</h2>
+<blockquote>
+<p>loadSource(url)</p>
+</blockquote>
+<p>用于加载.m3u8文件路径 {string} url；</p>
+<blockquote>
+<p>attachMedia()</p>
+</blockquote>
+<p>挂载media元素；</p>
+<blockquote>
+<p>destroy()</p>
+</blockquote>
+<p>注销实例;</p>
+<blockquote>
+<p>detachMedia()</p>
+</blockquote>
+<p>Detach from the media;</p>
+<blockquote>
+<p>startLoad()</p>
+</blockquote>
+<p>Start loading data from the stream source.Depending on default config, client starts loading automatically when a source is set.</p>
+<blockquote>
+<p>stopLoad()</p>
+</blockquote>
+<p>Stop loading of any stream data.</p>
+<blockquote>
+<p>swapAudioCodec()</p>
+</blockquote>
+<p>Swap through possible audio codecs in the stream (for example to switch from stereo to 5.1)</p>
+<blockquote>
+<p>recoverMediaError()</p>
+</blockquote>
+<p>When the media-element fails, this allows to detach and then re-attach it as one call (convenience method).</p>
+<h2 id="常规事件">常规事件</h2>
+<blockquote>
+<p>ERROR</p>
+</blockquote>
+<p>含义：hls的错误事件。<br>
+使用方法：</p>
+<pre><code>this.hls = new Hls();
+this.hls.on(Hls.Events.ERROR, (data) =&gt; {
+    do something~~        
+});
+</code></pre>
+<blockquote>
+<p>其它事件介绍</p>
+</blockquote>
+<pre><code>  // fired before MediaSource is attaching to media element - data: { media }
+  MEDIA_ATTACHING: 'hlsMediaAttaching',
+  // fired when MediaSource has been succesfully attached to media element - data: { }
+  MEDIA_ATTACHED: 'hlsMediaAttached',
+  // fired before detaching MediaSource from media element - data: { }
+  MEDIA_DETACHING: 'hlsMediaDetaching',
+  // fired when MediaSource has been detached from media element - data: { }
+  MEDIA_DETACHED: 'hlsMediaDetached',
+  // fired when we buffer is going to be reset - data: { }
+  BUFFER_RESET: 'hlsBufferReset',
+  // fired when we know about the codecs that we need buffers for to push into - data: {tracks : { container, codec, levelCodec, initSegment, metadata }}
+  BUFFER_CODECS: 'hlsBufferCodecs',
+  // fired when sourcebuffers have been created - data: { tracks : tracks }
+  BUFFER_CREATED: 'hlsBufferCreated',
+  // fired when we append a segment to the buffer - data: { segment: segment object }
+  BUFFER_APPENDING: 'hlsBufferAppending',
+  // fired when we are done with appending a media segment to the buffer - data : { parent : segment parent that triggered BUFFER_APPENDING, pending : nb of segments waiting for appending for this segment parent}
+  BUFFER_APPENDED: 'hlsBufferAppended',
+  // fired when the stream is finished and we want to notify the media buffer that there will be no more data - data: { }
+  BUFFER_EOS: 'hlsBufferEos',
+  // fired when the media buffer should be flushed - data { startOffset, endOffset }
+  BUFFER_FLUSHING: 'hlsBufferFlushing',
+  // fired when the media buffer has been flushed - data: { }
+  BUFFER_FLUSHED: 'hlsBufferFlushed',
+  // fired to signal that a manifest loading starts - data: { url : manifestURL}
+  MANIFEST_LOADING: 'hlsManifestLoading',
+  // fired after manifest has been loaded - data: { levels : [available quality levels], audioTracks : [ available audio tracks], url : manifestURL, stats : { trequest, tfirst, tload, mtime}}
+  MANIFEST_LOADED: 'hlsManifestLoaded',
+  // fired after manifest has been parsed - data: { levels : [available quality levels], firstLevel : index of first quality level appearing in Manifest}
+  MANIFEST_PARSED: 'hlsManifestParsed',
+  // fired when a level switch is requested - data: { level : id of new level }
+  LEVEL_SWITCHING: 'hlsLevelSwitching',
+  // fired when a level switch is effective - data: { level : id of new level }
+  LEVEL_SWITCHED: 'hlsLevelSwitched',
+  // fired when a level playlist loading starts - data: { url : level URL, level : id of level being loaded}
+  LEVEL_LOADING: 'hlsLevelLoading',
+  // fired when a level playlist loading finishes - data: { details : levelDetails object, level : id of loaded level, stats : { trequest, tfirst, tload, mtime} }
+  LEVEL_LOADED: 'hlsLevelLoaded',
+  // fired when a level's details have been updated based on previous details, after it has been loaded - data: { details : levelDetails object, level : id of updated level }
+  LEVEL_UPDATED: 'hlsLevelUpdated',
+  // fired when a level's PTS information has been updated after parsing a fragment - data: { details : levelDetails object, level : id of updated level, drift: PTS drift observed when parsing last fragment }
+  LEVEL_PTS_UPDATED: 'hlsLevelPtsUpdated',
+  // fired to notify that audio track lists has been updated - data: { audioTracks : audioTracks }
+  AUDIO_TRACKS_UPDATED: 'hlsAudioTracksUpdated',
+  // fired when an audio track switching is requested - data: { id : audio track id }
+  AUDIO_TRACK_SWITCHING: 'hlsAudioTrackSwitching',
+  // fired when an audio track switch actually occurs - data: { id : audio track id }
+  AUDIO_TRACK_SWITCHED: 'hlsAudioTrackSwitched',
+  // fired when an audio track loading starts - data: { url : audio track URL, id : audio track id }
+  AUDIO_TRACK_LOADING: 'hlsAudioTrackLoading',
+  // fired when an audio track loading finishes - data: { details : levelDetails object, id : audio track id, stats : { trequest, tfirst, tload, mtime } }
+  AUDIO_TRACK_LOADED: 'hlsAudioTrackLoaded',
+  // fired to notify that subtitle track lists has been updated - data: { subtitleTracks : subtitleTracks }
+  SUBTITLE_TRACKS_UPDATED: 'hlsSubtitleTracksUpdated',
+  // fired when an subtitle track switch occurs - data: { id : subtitle track id }
+  SUBTITLE_TRACK_SWITCH: 'hlsSubtitleTrackSwitch',
+  // fired when a subtitle track loading starts - data: { url : subtitle track URL, id : subtitle track id }
+  SUBTITLE_TRACK_LOADING: 'hlsSubtitleTrackLoading',
+  // fired when a subtitle track loading finishes - data: { details : levelDetails object, id : subtitle track id, stats : { trequest, tfirst, tload, mtime } }
+  SUBTITLE_TRACK_LOADED: 'hlsSubtitleTrackLoaded',
+  // fired when a subtitle fragment has been processed - data: { success : boolean, frag : the processed frag }
+  SUBTITLE_FRAG_PROCESSED: 'hlsSubtitleFragProcessed',
+  // fired when the first timestamp is found - data: { id : demuxer id, initPTS: initPTS, frag : fragment object }
+  INIT_PTS_FOUND: 'hlsInitPtsFound',
+  // fired when a fragment loading starts - data: { frag : fragment object }
+  FRAG_LOADING: 'hlsFragLoading',
+  // fired when a fragment loading is progressing - data: { frag : fragment object, { trequest, tfirst, loaded } }
+  FRAG_LOAD_PROGRESS: 'hlsFragLoadProgress',
+  // Identifier for fragment load aborting for emergency switch down - data: { frag : fragment object }
+  FRAG_LOAD_EMERGENCY_ABORTED: 'hlsFragLoadEmergencyAborted',
+  // fired when a fragment loading is completed - data: { frag : fragment object, payload : fragment payload, stats : { trequest, tfirst, tload, length } }
+  FRAG_LOADED: 'hlsFragLoaded',
+  // fired when a fragment has finished decrypting - data: { id : demuxer id, frag: fragment object, payload : fragment payload, stats : { tstart, tdecrypt } }
+  FRAG_DECRYPTED: 'hlsFragDecrypted',
+  // fired when Init Segment has been extracted from fragment - data: { id : demuxer id, frag: fragment object, moov : moov MP4 box, codecs : codecs found while parsing fragment }
+  FRAG_PARSING_INIT_SEGMENT: 'hlsFragParsingInitSegment',
+  // fired when parsing sei text is completed - data: { id : demuxer id, frag: fragment object, samples : [ sei samples pes ] }
+  FRAG_PARSING_USERDATA: 'hlsFragParsingUserdata',
+  // fired when parsing id3 is completed - data: { id : demuxer id, frag: fragment object, samples : [ id3 samples pes ] }
+  FRAG_PARSING_METADATA: 'hlsFragParsingMetadata',
+  // fired when data have been extracted from fragment - data: { id : demuxer id, frag: fragment object, data1 : moof MP4 box or TS fragments, data2 : mdat MP4 box or null}
+  FRAG_PARSING_DATA: 'hlsFragParsingData',
+  // fired when fragment parsing is completed - data: { id : demuxer id, frag: fragment object }
+  FRAG_PARSED: 'hlsFragParsed',
+  // fired when fragment remuxed MP4 boxes have all been appended into SourceBuffer - data: { id : demuxer id, frag : fragment object, stats : { trequest, tfirst, tload, tparsed, tbuffered, length, bwEstimate } }
+  FRAG_BUFFERED: 'hlsFragBuffered',
+  // fired when fragment matching with current media position is changing - data : { id : demuxer id, frag : fragment object }
+  FRAG_CHANGED: 'hlsFragChanged',
+  // Identifier for a FPS drop event - data: { curentDropped, currentDecoded, totalDroppedFrames }
+  FPS_DROP: 'hlsFpsDrop',
+  // triggered when FPS drop triggers auto level capping - data: { level, droppedlevel }
+  FPS_DROP_LEVEL_CAPPING: 'hlsFpsDropLevelCapping',
+  // Identifier for an error event - data: { type : error type, details : error details, fatal : if true, hls.js cannot/will not try to recover, if false, hls.js will try to recover,other error specific data }
+  ERROR: 'hlsError',
+  // fired when hls.js instance starts destroying. Different from MEDIA_DETACHED as one could want to detach and reattach a media to the instance of hls.js to handle mid-rolls for example - data: { }
+  DESTROYING: 'hlsDestroying',
+  // fired when a decrypt key loading starts - data: { frag : fragment object }
+  KEY_LOADING: 'hlsKeyLoading',
+  // fired when a decrypt key loading is completed - data: { frag : fragment object, payload : key payload, stats : { trequest, tfirst, tload, length } }
+  KEY_LOADED: 'hlsKeyLoaded',
+  // fired upon stream controller state transitions - data: { previousState, nextState }
+  STREAM_STATE_TRANSITION: 'hlsStreamStateTransition'
+</code></pre>
+<h2 id="兼容性">兼容性</h2>
+<p>截至2018/7，它支持：</p>
+<ul>
+<li>Chrome for Android 34+</li>
+<li>Chrome for Desktop 34+</li>
+<li>适用于Android的Firefox 41+</li>
+<li>Firefox for Desktop 42+</li>
+<li>IE11 + for Windows 8.1+</li>
+<li>Edge for Windows 10+</li>
+<li>Opera for Desktop</li>
+<li>Vivaldi for Desktop</li>
+<li>Safari for Mac 8+（测试版）</li>
+</ul>
+<p>请注意：iOS Safari“Mobile”不支持MediaSource API。然而，Safari浏览器通过纯视频“标签”源URL支持内置的HLS支持。请参阅上面的示例（入门指南）运行适当的功能检测并选择使用Hls.js或本机内置的HLS支持。</p>
+<p>当平台既没有MediaSource也没有本地HLS支持时，您将无法播放HLS。</p>
+<h2 id="事件流">事件流</h2>
+<p>由于内部通信都是基于 EventEmitter 来实现，透过事件流，你可以了解到代码运行的整体流程。</p>
+<p>hls 整体流程如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://img.colabug.com/2017/11/382f3e53f4e662010efee1fd000feca8.png" alt="image" loading="lazy"></figure>
+<p>hls实际会先通过 ajax（loader 是可以完成自定义的） 请求 m3u8文件，然后会读取到文件的分片列表，以及视频的编码格式，时长等。随后会按照顺序(非 seek )去对分片进行请求，这些也是通过 ajax 请求二进制的文件，然后借助 Media Source Extensions 将 buffer 内容进行合流，然后组成一个可播的媒体资源文件。</p>
+<p>由于内部通过自定事件进行数据传递和流程控制，参考下面的图：</p>
+<figure data-type="image" tabindex="2"><img src="https://img.colabug.com/2017/11/39ccf4fdcc416d91a5f1811b4561927d.png" alt="image" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#hlsjs-%E4%BB%8B%E7%BB%8D">hls.js 介绍</a></li>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E5%85%A5%E9%97%A8">基本入门</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E5%9F%BA%E6%9C%ACapi%E7%94%A8%E6%B3%95">基本api用法</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%84%E4%BA%8B%E4%BB%B6">常规事件</a></li>
+<li><a href="#%E5%85%BC%E5%AE%B9%E6%80%A7">兼容性</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E6%B5%81">事件流</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-wu-zhi-sql-gao-ji-shu-ju-cao-zuo/">
+              <h3 class="post-title">
+                mysql操作 (五) 之SQL 高级数据操作
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

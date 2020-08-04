@@ -1,0 +1,378 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>mysql操作 (二) 之SQL 表操作（字段） | 孟饭饭的独立博客</title>
+<link rel="shortcut icon" href="https://duanjiuzhou.github.io/mengff.github.io//favicon.ico?v=1596535616316">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://duanjiuzhou.github.io/mengff.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="mysql操作 (二) 之SQL 表操作（字段） | 孟饭饭的独立博客 - Atom Feed" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167439282-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167439282-1');
+</script>
+
+
+    <meta name="description" content="SQL 表操作（字段）
+
+新增数据表
+
+基本语法:
+create table [if not exists] 表名(
+字段名字 数据类型,
+字段名字 数据类型       -- 最后一行不需要逗号
+)[表选项];
+
+解释：
+if not e..." />
+    <meta name="keywords" content="mysql" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://duanjiuzhou.github.io/mengff.github.io/">
+  <img class="avatar" src="https://duanjiuzhou.github.io/mengff.github.io//images/avatar.png?v=1596535616316" alt="">
+  </a>
+  <h1 class="site-title">
+    孟饭饭的独立博客
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              mysql操作 (二) 之SQL 表操作（字段）
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-04
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://duanjiuzhou.github.io/mengff.github.io/tag/bXEi_aNH7/" class="post-tag">
+                  # mysql
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://duanjiuzhou.github.io/mengff.github.io//post-images/mysql-cao-zuo-er-zhi-sql-biao-cao-zuo-zi-duan.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="sql-表操作字段">SQL 表操作（字段）</h2>
+<blockquote>
+<p>新增数据表</p>
+</blockquote>
+<p>基本语法:</p>
+<pre><code>create table [if not exists] 表名(
+字段名字 数据类型,
+字段名字 数据类型       -- 最后一行不需要逗号
+)[表选项];
+</code></pre>
+<p><strong>解释：</strong></p>
+<p>if not exists：如果表名不存在，那么创建，否则不执行创建代码（检查功能）</p>
+<p>表选项：控制表的表现</p>
+<p>字符集：charset/charset set 具体字符集;  -- 保证表中数据存储的字符集</p>
+<p>校对集：collate 具体校对集；</p>
+<p>存储引擎：engine 具体的存储引擎（innodb 和 myisam）</p>
+<p>任何一个表的设计都必须指定数据库。</p>
+<ol>
+<li>
+<p>方案1：:显示的指定表所属的数据库</p>
+<pre><code>create tabe 数据库名.表名();  -- 将当期数据表创建到指定的数据库中
+</code></pre>
+<p>例：</p>
+<pre><code> -- 创建数据表
+ create table if not exists mydatabase.student(  -- 显示的student表放到mydatabase数据库下
+    name varchar(10),
+    gender varchar(12),
+    number int
+    age int
+ )charset utf8;
+</code></pre>
+</li>
+<li>
+<p>方案2：隐式的指定表所属数据库：先进入到某个数据库环境，然后这样创建的表自动归属到某个指定的数据库。</p>
+<p>进入数据库环境：use 数据库名字;</p>
+<p>例：</p>
+<pre><code>-- 创建数据表
+-- 进入数据库
+use mydatabase;
+
+-- 创建表
+create table class(
+name varchar(10),
+room varchar(10)
+)charset utf8;
+</code></pre>
+<p>当创建数据表的SQL指令执行之后，发生了什么？</p>
+<ul>
+<li>指定数据库下已存在对应的表</li>
+<li>在数据库对应的文件夹下，会产生对应表的数据结构文件（跟存储引擎有关系）</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>查看数据表</p>
+</blockquote>
+<ol>
+<li>
+<p>查看所有表</p>
+<p>基本语法：</p>
+<pre><code>show tables;
+</code></pre>
+</li>
+<li>
+<p>查看部分表：模糊匹配</p>
+<p>基本语法：</p>
+<pre><code>show tables like 'pattern';
+</code></pre>
+<p>例：</p>
+<pre><code>--查看以s结尾的表
+show table like '%s';
+</code></pre>
+</li>
+<li>
+<p>查看表创建语句</p>
+<p>基本语法：</p>
+<pre><code>show create table 表名;
+</code></pre>
+<p>例：</p>
+<pre><code>--  查看表创建语句
+show create table student\g  -- \g 等同于 ;
+show create table student\G  -- 将查到的结构旋转90度变成纵向。
+</code></pre>
+</li>
+<li>
+<p>查看表结构：查看表中的字段信息</p>
+</li>
+</ol>
+<p>基本语法：</p>
+<pre><code>~~~
+desc/describe/show columns from 表名;
+~~~
+
+例：
+
+~~~
+-- 查看表结构
+desc calss;
+describe calss;
+show columns from class;  // 以上三种语法表达的意思都一样
+~~~
+</code></pre>
+<blockquote>
+<p>修改数据表</p>
+</blockquote>
+<p>表本身存在，还包含字段：表的修改包含两部分：修改表本身和修改字段。</p>
+<ol>
+<li>修改表本身</li>
+</ol>
+<p>表本身可以修改：表名和表选项</p>
+<ul>
+<li>
+<p>修改表名：</p>
+<pre><code>rename table 老表名 to 新表名;
+</code></pre>
+</li>
+<li>
+<p>修改表选项：字符集、校对集和存储引擎</p>
+<pre><code>alter table 表名 表选项 [=] 值;
+</code></pre>
+<p>例：</p>
+<pre><code>-- 修改表选项：字符集
+alter table my_student clarset = GBK;
+</code></pre>
+</li>
+</ul>
+<ol start="2">
+<li>修改字段</li>
+</ol>
+<p>字段操作很多：新增，修改，重名，删除</p>
+<ul>
+<li>
+<p>新增字段：</p>
+<pre><code>alter table 表名 add [column] 字段名 数据类型 [列属性][位置];
+
+位置：字段名可以存放表中任意位置
+    first：第一个位置
+    after：在哪个字段之后：after字段名；默认的是在最后一个字段之后。
+</code></pre>
+<p>例：</p>
+<pre><code>-- 给学生表增加ID放在第一个位置
+alter table my_student add column id int first;
+</code></pre>
+</li>
+<li>
+<p>修改字段：修改通常是修改属性或者数据类型</p>
+<pre><code>alter table 表名 modify 字段名 数据类型 [属性][位置];
+</code></pre>
+<p>例：</p>
+<pre><code>-- 将学生表中的number学号字段变成固定长度，且放到第二位（id之后）
+alter table my_student modify number char(10) after id;
+</code></pre>
+</li>
+<li>
+<p>重命名字段</p>
+<pre><code>alter table 表名 change 旧字段 新字段 数据类型 [属性][位置];
+</code></pre>
+<p>例：</p>
+<pre><code>-- 修改学生表中的 gender字段为sex
+alter table my_student change gender sex varchar(10);
+</code></pre>
+</li>
+<li>
+<p>删除字段</p>
+<pre><code>alter table 表名 drop 字段名;
+</code></pre>
+</li>
+</ul>
+<p><strong>小心：</strong>  如果表中已经存在数据，那么删除字段会清空该字段的所有数据（不可逆）</p>
+<blockquote>
+<p>删除数据表</p>
+</blockquote>
+<p>基本语法：</p>
+<pre><code>drop table 表名1,表名2;  --可以一次性删除多张表
+</code></pre>
+<p>当删除数据表的指令执行后发生了什么？</p>
+<ul>
+<li>在表空间中，没有了指定的表（数据也没有了）</li>
+<li>在数据库对应的文件夹下，表对应的文件（与存储引擎有关）也删除了。</li>
+</ul>
+<p>注意：删除有危险操作需谨慎（不可逆）</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#sql-%E8%A1%A8%E6%93%8D%E4%BD%9C%E5%AD%97%E6%AE%B5">SQL 表操作（字段）</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-yi-zhi-ji-ben-zhi-ling-sql-ku-cao-zuo/">
+              <h3 class="post-title">
+                mysql操作 (一) 之基本指令、SQL 库操作
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

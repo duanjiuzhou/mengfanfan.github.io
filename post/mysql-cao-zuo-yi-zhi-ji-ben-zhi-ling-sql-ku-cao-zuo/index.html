@@ -1,0 +1,302 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>mysql操作 (一) 之基本指令、SQL 库操作 | 孟饭饭的独立博客</title>
+<link rel="shortcut icon" href="https://duanjiuzhou.github.io/mengff.github.io//favicon.ico?v=1596535616316">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://duanjiuzhou.github.io/mengff.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="mysql操作 (一) 之基本指令、SQL 库操作 | 孟饭饭的独立博客 - Atom Feed" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167439282-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167439282-1');
+</script>
+
+
+    <meta name="description" content="1、基本指令
+mysql -u root -p  --连接数据库
+use &lt;数据库名&gt;    --使用数据库
+show databases    --查询所有数据库 注：use 数据库后才能操作
+exit/quilt/\q   ..." />
+    <meta name="keywords" content="mysql" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://duanjiuzhou.github.io/mengff.github.io/">
+  <img class="avatar" src="https://duanjiuzhou.github.io/mengff.github.io//images/avatar.png?v=1596535616316" alt="">
+  </a>
+  <h1 class="site-title">
+    孟饭饭的独立博客
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://duanjiuzhou.github.io/mengff.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              mysql操作 (一) 之基本指令、SQL 库操作
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-04
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://duanjiuzhou.github.io/mengff.github.io/tag/bXEi_aNH7/" class="post-tag">
+                  # mysql
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://duanjiuzhou.github.io/mengff.github.io//post-images/mysql-cao-zuo-yi-zhi-ji-ben-zhi-ling-sql-ku-cao-zuo.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="1-基本指令">1、基本指令</h2>
+<pre><code>mysql -u root -p  --连接数据库
+use &lt;数据库名&gt;    --使用数据库
+show databases    --查询所有数据库 注：use 数据库后才能操作
+exit/quilt/\q     --断开连接 三种方式
+</code></pre>
+<p><strong>注意：</strong></p>
+<p>数据库名字以字母数字下划线组成，不能以数字开头。</p>
+<p>-- 双中划线+空格：注释（单行注释），也可以使用#号</p>
+<h2 id="2-sql-库操作">2、SQL 库操作</h2>
+<blockquote>
+<p>新增数据库</p>
+</blockquote>
+<p>基本语法</p>
+<pre><code>create database 数据库名字 [库选项];
+
+例：
+create database myDatabase charset utf8;
+</code></pre>
+<p><strong>库选项：</strong></p>
+<p>用来约束数据库，分为两个选项：</p>
+<p>字符集设定：charset/character set 具体字符集（数据存储的编码格式）：常用字符集 GBK和UTF8</p>
+<p>校对集设定：collate具体校对集（数据比较的规则）</p>
+<p><strong>注意：</strong></p>
+<ol>
+<li>
+<p>数据库名字不能使用关键字（已经被使用的字符）或者保留字（将来可能用到的）</p>
+<pre><code>-- 创建关键字数据库 会报错
+create database database charset utf8;
+</code></pre>
+<p>如果非要使用关键字或者保留字，那么必须使用反引号``。</p>
+<pre><code>-- 使用反引号 包裹关键字
+create database `database` charset utf8;
+</code></pre>
+</li>
+<li>
+<p>中文数据库是可以的，但是有个前提条件：保证服务器能够识别。（建议不用）</p>
+<pre><code>-- 创建中文数据库
+create database `中国` charset utf8;  // 报错
+create database 中国 charset utf8;    // 报错
+</code></pre>
+<p>解决方案：</p>
+<p>告诉服务器当前中文的字符集是什么</p>
+<pre><code>set names gbk;
+create database 中国 charset utf8;
+</code></pre>
+</li>
+<li>
+<p>当创建数据库的SQL语句执行以后，发生了什么？</p>
+<ul>
+<li>在数据库系统中，增加了对应的数据库信息</li>
+<li>会在保存数据的文件夹下，data目录，创建一个对应数据库名字的文件夹</li>
+<li>每个数据库下都有一个opt文件</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>查看数据库</p>
+</blockquote>
+<ol>
+<li>
+<p>查看所有数据库</p>
+<pre><code>show databases;
+</code></pre>
+</li>
+<li>
+<p>查看指定部分的数据库：模糊查询</p>
+<pre><code>show databases like 'pattern';    --pattern 是匹配模式
+%：表示匹配多个字符
+_：表示匹配单个字符
+</code></pre>
+<p>例：</p>
+<pre><code>-- 查看以inform_开始的数据库：_需要被转义
+show database like 'inform\_%';
+
+show database like 'inform_%';  -- 相当于inform%
+</code></pre>
+</li>
+<li>
+<p>查看数据库的创建语句</p>
+<pre><code>show create database 数据库名字;
+</code></pre>
+</li>
+</ol>
+<blockquote>
+<p>更新数据库</p>
+</blockquote>
+<p>数据库名字不可以修改。</p>
+<p>数据库的修改仅限于库选项：字符集和校对集（校对集依赖于字符集）</p>
+<p>基本格式：</p>
+<pre><code>alter database 数据库名字 [库选项];
+charset/charset set[=] 字符集
+collate 校对集
+</code></pre>
+<p>例：</p>
+<pre><code>-- 修改数据库inform的字符集
+alter database inform chartset GBK;
+</code></pre>
+<blockquote>
+<p>删除数据库</p>
+</blockquote>
+<p>基本格式：</p>
+<pre><code>drop database 数据库名字;
+</code></pre>
+<p>当删除数据库语句执行之后发生什么？</p>
+<ul>
+<li>在数据库内部看不到对应的数据库；</li>
+<li>在对应的数据库存储的文件夹中：数据库名字对应的文件夹也被删除（级联删除：里面的数据表全部删除）</li>
+</ul>
+<p><strong>注意：</strong></p>
+<p>数据库不要随意删除，应该先进行备份后操作。（删除不可逆）</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4">1、基本指令</a></li>
+<li><a href="#2-sql-%E5%BA%93%E6%93%8D%E4%BD%9C">2、SQL 库操作</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://duanjiuzhou.github.io/mengff.github.io/post/js-shu-zu-de-shen-qian-kao-bei/">
+              <h3 class="post-title">
+                js数组的深浅拷贝
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://duanjiuzhou.github.io/mengff.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
