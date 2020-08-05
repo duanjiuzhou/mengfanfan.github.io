@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://duanjiuzhou.github.io/mengff.github.io/</id>
     <title>孟饭饭的独立博客</title>
-    <updated>2020-08-04T10:07:02.364Z</updated>
+    <updated>2020-08-05T03:20:57.975Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://duanjiuzhou.github.io/mengff.github.io/"/>
     <link rel="self" href="https://duanjiuzhou.github.io/mengff.github.io/atom.xml"/>
@@ -11,839 +11,633 @@
     <icon>https://duanjiuzhou.github.io/mengff.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 孟饭饭的独立博客</rights>
     <entry>
-        <title type="html"><![CDATA[js 判断数据类型四种方法]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/">
+        <title type="html"><![CDATA[Git Commit Message 提交规范配置说明]]></title>
+        <id>https://duanjiuzhou.github.io/mengff.github.io/post/git-commit-message-ti-jiao-gui-fan-pei-zhi-shuo-ming/</id>
+        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/git-commit-message-ti-jiao-gui-fan-pei-zhi-shuo-ming/">
         </link>
-        <updated>2020-08-04T08:30:44.000Z</updated>
-        <summary type="html"><![CDATA[<p>鉴于 js 是松散类型的，因此需有一种手段来检测给定变量的数据类型。对此Js 也提供多种方法，但遗憾的是，不同的方法得到的结果参差不齐。</p>
+        <updated>2020-05-23T06:31:55.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="描述">描述</h2>
+<p>针对 git commit log 提交规范问题，需要统一规范，不然很容易造成误解。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>鉴于 js 是松散类型的，因此需有一种手段来检测给定变量的数据类型。对此Js 也提供多种方法，但遗憾的是，不同的方法得到的结果参差不齐。</p>
+        <content type="html"><![CDATA[<h2 id="描述">描述</h2>
+<p>针对 git commit log 提交规范问题，需要统一规范，不然很容易造成误解。</p>
 <!-- more -->
-<h2 id="1-typeof">1、typeof</h2>
-<p>typeof 是一个操作符，其右侧跟一个一元表达式，并返回这个表达式的数据类型。返回的结果用该类型的字符串(全小写字母)形式表示，包括以下 7 种：number、boolean、symbol、string、object、undefined、function 等。</p>
-<pre><code>   typeof ''; // string 有效
-   typeof 1; // number 有效
-   typeof Symbol(); // symbol 有效
-   typeof true; //boolean 有效
-   typeof undefined; //undefined 有效
-   typeof null; //object 无效
-   typeof [] ; //object 无效
-   typeof new Function(); // function 有效
-   typeof new Date(); //object 无效
-   typeof new RegExp(); //object 无效
+<h2 id="commitizen-替代你的-git-commit">Commitizen: 替代你的 git commit</h2>
+<h3 id="全局安装">全局安装</h3>
+<pre><code>npm install -g commitizen
 </code></pre>
-<h2 id="2-instanceof">2、instanceof</h2>
-<p>instanceof 是用来判断 A 是否为 B 的实例，表达式为：A instanceof B，如果 A 是 B 的实例，则返回 true,否则返回 false。 在这里需要特别注意的是：instanceof 检测的是原型</p>
-<pre><code>   [] instanceof Array; // true
-   {} instanceof Object;// true
-   new Date() instanceof Date;// true
-    
-   function Person(){};
-   new Person() instanceof Person;
-    
-   [] instanceof Object; // true
-   new Date() instanceof Object;// true
-   new Person instanceof Object;// true
+<h3 id="项目级安装">项目级安装</h3>
+<pre><code>npm install -D commitizen cz-customizable --dev
 </code></pre>
-<h2 id="3-constructor">3、constructor</h2>
-<p>对象的constructor属性用于返回创建该对象的函数</p>
-<pre><code>   var test=new Array();
-   
-   if (test.constructor==Array)
-   {
-   document.write(&quot;This is an Array&quot;);
-   }
-   if (test.constructor==Boolean)
-   {
-   document.write(&quot;This is a Boolean&quot;);
-   }
-   if (test.constructor==Date)
-   {
-   document.write(&quot;This is a Date&quot;);
-   }
-   if (test.constructor==String)
-   {
-   document.write(&quot;This is a String&quot;);
-   }
+<p><code>package.json</code>中配置:</p>
+<pre><code>  &quot;config&quot;: {
+    &quot;commitizen&quot;: {
+      &quot;path&quot;: &quot;node_modules/cz-customizable&quot;
+    }
+  },
 </code></pre>
-<blockquote>
-<p>细节问题：</p>
-</blockquote>
-<ol>
-<li>
-<p>null 和 undefined 是无效的对象，因此是不会有 constructor 存在的，这两种类型的数据需要通过其他方式来判断。</p>
-</li>
-<li>
-<p>函数的 constructor 是不稳定的，这个主要体现在自定义对象上，当开发者重写 prototype 后，原有的 constructor 引用会丢失，constructor 会默认为 Object</p>
-</li>
-</ol>
-<h2 id="4-tostring">4、toString</h2>
-<p>toString() 是 Object 的原型方法，调用该方法，默认返回当前对象的 [[Class]] 。这是一个内部属性，其格式为 [object Xxx] ，其中 Xxx 就是对象的类型。</p>
-<p>对于 Object 对象，直接调用 toString()  就能返回 [object Object] 。而对于其他对象，则需要通过 call / apply 来调用才能返回正确的类型信息。</p>
-<pre><code>    Object.prototype.toString.call('') ;   // [object String]
-    Object.prototype.toString.call(1) ;    // [object Number]
-    Object.prototype.toString.call(true) ; // [object Boolean]
-    Object.prototype.toString.call(Symbol()); //[object Symbol]
-    Object.prototype.toString.call(undefined) ; // [object Undefined]
-    Object.prototype.toString.call(null) ; // [object Null]
-    Object.prototype.toString.call(new Function()) ; // [object Function]
-    Object.prototype.toString.call(new Date()) ; // [object Date]
-    Object.prototype.toString.call([]) ; // [object Array]
-    Object.prototype.toString.call(new RegExp()) ; // [object RegExp]
-    Object.prototype.toString.call(new Error()) ; // [object Error]
-    Object.prototype.toString.call(document) ; // [object HTMLDocument]
-    Object.prototype.toString.call(window) ; //[object global] window 是全局对象 global 的引用
+<h3 id="配置规则">配置规则</h3>
+<p>.cz-config.js 中写入自定义的配置：</p>
+<pre><code>'use strict'
+
+module.exports = {
+  types: [
+    {
+      value: '💪 WIP',
+      name: '进度: 工作进度',
+    },
+    {
+      value: '✨ feat',
+      name: '功能: 新功能',
+    },
+    {
+      value: '🐞 fix',
+      name: '修复: 修复bug',
+    },
+    {
+      value: '🛠 refactor',
+      name: '重构: 代码重构',
+    },
+    {
+      value: '📚  docs',
+      name: '文档: 只有文档变更',
+    },
+    {
+      value: '🏁  test',
+      name: '测试: 添加一个测试',
+    },
+    {
+      value: '🗯 chore',
+      name: '工具: 没有修改源代码，只是变更构建流程或辅助工具。',
+    },
+    {
+      value: '💅 style',
+      name: '样式: 空格，分号等格式修复。',
+    },
+    {
+      value: '⏪ revert',
+      name: '回滚: 代码回退。',
+    },
+    {
+      value: '🏎  perf',
+      name: '性能: 提升性能。',
+    },
+    {
+      value: '🏗 build',
+      name: '构建: 变更项目构建或外部依赖（例如scopes: webpack、gulp、npm等）',
+    },
+    {
+      value: '🕹 ci',
+      name:
+        '集成: 更改持续集成软件的配置文件和package中的scripts命令，例如scopes: Travis, Circle等',
+    },
+  ],
+  scopes: [],
+  messages: {
+    type: '选择一种你的提交类型:',
+    scope: '选择一个scope (可选):',
+    // used if allowCustomScopes is true
+    customScope: 'Denote the SCOPE of this change:',
+    subject: '短说明:\n',
+    body: '长说明，使用&quot;|&quot;换行(可选)：\n',
+    breaking: '非兼容性说明 (可选):\n',
+    footer: '关联关闭的issue，例如：#31, #34(可选):\n',
+    confirmCommit: '确定提交说明？',
+  },
+  footerPrefix: 'TAPD: ',
+  allowCustomScopes: true,
+  allowBreakingChanges: ['特性', '修复'],
+  skipQuestions: ['scope', 'body', 'footer'],
+}
 </code></pre>
-<p>方法：</p>
-<pre><code>export const typeExamine = (value: any) =&gt; {
-  return Reflect.apply(Object.prototype.toString, value, [])
-    .replace(/^\[object\s(\w+)\]$/, &quot;$1&quot;)
-    .toLowerCase();
+<p>效果如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://duanjiuzhou.github.io/mengff.github.io//post-images/1590216132807.png" alt="" loading="lazy"></figure>
+<h3 id="commitlint-校验你的-message">Commitlint: 校验你的 message</h3>
+<p>commitlint: 可以帮助我们 lint commit messages, 如果我们提交的不符合指向的规范, 直接拒绝提交。</p>
+<pre><code>yarn add commitlint-config-cz @commitlint/cli --dev
+</code></pre>
+<p>.commitlintrc.js 中写入:</p>
+<pre><code>module.exports = {
+  extends: [
+    'cz'
+  ],
+  rules: {
+  }
 };
 </code></pre>
+<h3 id="结合-husky">结合 Husky</h3>
+<p>校验 commit message 的最佳方式是结合 git hook, 所以需要配合 Husky。</p>
+<pre><code>npm i husky@next
+</code></pre>
+<p>package.json 中添加:</p>
+<pre><code>&quot;husky&quot;: {
+    &quot;hooks&quot;: {
+      ...,
+      &quot;commit-msg&quot;: &quot;commitlint -e $GIT_PARAMS&quot;
+    }
+  },
+</code></pre>
+<p><a href="https://juejin.im/post/5afc5242f265da0b7f44bee4">参考</a></p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[【转】CSS垂直居中技巧，我只会23个，你会几个？]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-css-chui-zhi-ju-zhong-ji-qiao-wo-zhi-hui-23-ge-ni-hui-ji-ge/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-css-chui-zhi-ju-zhong-ji-qiao-wo-zhi-hui-23-ge-ni-hui-ji-ge/">
+        <title type="html"><![CDATA[满足大屏场景的拖拽组件原理说明]]></title>
+        <id>https://duanjiuzhou.github.io/mengff.github.io/post/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming/</id>
+        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming/">
         </link>
-        <updated>2020-08-04T08:30:17.000Z</updated>
-        <summary type="html"><![CDATA[<p>自古以来(是有多?~)，网页CSS的垂直居中需求始终没有停过，而其困难度也始终没有让人轻松过，经过了每位开发先烈的研究后，据说...</p>
+        <updated>2020-05-22T01:50:31.000Z</updated>
+        <summary type="html"><![CDATA[<p>✍️ 源于大屏场景下，由于进行适配页面尺寸，随着页面尺寸的频繁变化，导致拖拽组件的定位失效，引起拖拽异常......</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>自古以来(是有多?~)，网页CSS的垂直居中需求始终没有停过，而其困难度也始终没有让人轻松过，经过了每位开发先烈的研究后，据说...</p>
+        <content type="html"><![CDATA[<p>✍️ 源于大屏场景下，由于进行适配页面尺寸，随着页面尺寸的频繁变化，导致拖拽组件的定位失效，引起拖拽异常......</p>
 <!-- more -->
-<p>自古以来(是有多?~)，网页CSS的垂直居中需求始终没有停过，而其困难度也始终没有让人轻松过，经过了每位开发先烈的研究后，据说CSS的垂直居中技巧已达到近十种之多，但始终鲜为人知，部分公司甚至将CSS的垂直居中技巧当成面试题，其重要性可见一斑，经过了Amos通灵了一下之后把垂直居中的写法扩展到了23种，今天就让Amos带着大家轻松的了解一下CSS的垂直居中的方式吧。</p>
-<h2 id="1-line-height">1、Line-height</h2>
-<blockquote>
-<p>适用情景：单行文字垂直居中技巧</p>
-</blockquote>
-<p>这个方式应该是最多人知道的了，常见于单行文字的应用，像是按钮这一类对象，或者是下拉框、导航此类元素最常见到的方式了。此方式的原理是在于将单行文字的行高设定后，文字会位于行高的垂直中间位置，利用此原理就能轻松达成垂直居中的需求了。</p>
-<pre><code>&lt;div class=&quot;content&quot;&gt;Lorem ipsam.&lt;/div&gt;
-.content{
-  width: 400px;
-  background: #ccc;
-  line-height:100px;
-  margin: auto;
+<h3 id="场景">场景🦄</h3>
+<p><strong>组件需要满足功能：</strong></p>
+<ul>
+<li>基本PC端拖拽功能；</li>
+<li>适配屏幕尺寸变化；</li>
+<li>支持传入组件的定位<code>top, left</code>；（防止突发性页面尺寸比例变化，拖拽组件定位失效）</li>
+</ul>
+<h3 id="拖拽原理">拖拽原理</h3>
+<h4 id="所需事件">所需事件</h4>
+<ul>
+<li>onMousedown</li>
+<li>onMouseup</li>
+<li>onMousemove</li>
+</ul>
+<h4 id="原理说明">原理说明</h4>
+<h5 id="原理图">原理图🍥</h5>
+<figure data-type="image" tabindex="1"><img src="https://duanjiuzhou.github.io/mengff.github.io//post-images/1590112364894.png" alt="" loading="lazy"></figure>
+<h5 id="状态参数">状态参数</h5>
+<pre><code>const dragData = 
+{
+    // x偏移值
+    offsetX: 0,
+    // y偏移值
+    offsetY: 0,
+    // 是否开始拖拽
+    isDrag: false,
+    // 当前组件距离当前窗口x轴的距离
+    distanceX: 0,
+    // 当前组件距离当前窗口y轴的距离
+    distanceY: 0,
+    // 组件top定位
+    top: 0,
+    // 组件left定位
+    left: 0,
 }
 </code></pre>
-<h2 id="2-line-height-inline-block">2、Line-height + inline-block</h2>
+<h5 id="步骤">步骤</h5>
 <blockquote>
-<p>适用情景：多对象的垂直居中技巧</p>
+<p>第一步</p>
 </blockquote>
-<p>既然可以使用第一种方式对行元素达成垂直居中的话，当然没有理由不能做到多行啊~但是你需要将多个元素或多行元素当成一个行元素来看待，所以我们必须要将这些数据多包一层，并将其设定为inline-block，并在该inline-block对象的外层对象使用inline-block来代替height的设置，如此便可以达到垂直居中的目的了，从使你的数据是包含了标题跟内容在内也可以正常的垂直居中了。</p>
-<pre><code>&lt;div class=&quot;box box2&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
+<p>鼠标移动到组件可触发区域，鼠标按下，触发<code>onMousedown</code>事件，记录鼠标点击位置，开启拖动</p>
+<pre><code>// 记录鼠标点击位置
+dragData.distanceX = e.clientX
+dragData.distanceY = e.clientY
+// 开启拖动
+ dragData.isDrag = true
+</code></pre>
+<blockquote>
+<p>第二步</p>
+</blockquote>
+<p>鼠标移动，触发<code>onMousemove</code>事件，判断<code>dragData.isDrag</code>是否为真，为假跳出执行，为真继续执行。通过计算移动的距离，获取当前组件位置，算出最新位置，对组件进行更新位置信息。并记录当前组件距离当前窗口的距离、此时的偏移位置；</p>
+<p><strong>计算移动的距离：</strong></p>
+<p>计算移动的距离 = 本次距离当前窗口移动距离 - 上次距离当前窗口移动距离 + 上一次移动距离</p>
+<pre><code>const moveDistanceX = e.clientX - distanceX + offsetX
+const moveDistanceY = e.clientY - distanceY + offsetY
+</code></pre>
+<p><strong>获取最新位置：</strong></p>
+<p>不带页面缩放：</p>
+<p>最新位置 = 当前组件的位置 + 移动的距离</p>
+<p>带页面缩放：</p>
+<p>最新位置 = 当前组件的位置 + 移动的距离/页面缩放系数</p>
+<pre><code>const _left = left + moveDistanceX / scaleX
+const _top = top + moveDistanceY / scaleY
+</code></pre>
+<p><strong>更新组件位置信息：</strong></p>
+<pre><code>el.style.left = _left + 'px'
+el.style.top = _top + 'px'
+</code></pre>
+<p><strong>记录状态：</strong></p>
+<p>记录当前组件距离当前窗口的距离：</p>
+<pre><code>dragData.distanceX = e.clientX
+dragData.distanceY = e.clientY
+</code></pre>
+<p>记录当前偏移位置</p>
+<pre><code>dragData.offsetX = moveDistanceX
+dragData.offsetY = moveDistanceY
+</code></pre>
+<blockquote>
+<p>第三步</p>
+</blockquote>
+<p>鼠标抬起，触发<code>onMouseup</code>事件，关闭拖动；</p>
+<pre><code>dragData.isDrag = false
+</code></pre>
+<h3 id="适配屏幕尺寸变化">适配屏幕尺寸变化</h3>
+<h4 id="场景-2">场景</h4>
+<p>用户控制屏幕，使屏幕尺寸发送变化，使拖拽组件保存的定位信息过期，导致拖拽异常。</p>
+<h4 id="所需事件-2">所需事件</h4>
+<ul>
+<li>onResize</li>
+</ul>
+<h4 id="原理说明-2">原理说明</h4>
+<p>向<code>window</code>绑定<code>resize</code>事件，监控页面尺寸变化，当尺寸发生变化，或者最新组件定位，清空保存的定位状态信息。</p>
+<pre><code>const { left, top } = el.style
+const _top = +top.replace(/px/, '')
+const _left = +left.replace(/px/, '')
+dragData = {
+   offsetX: 0,
+   offsetY: 0,
+   isDrag: false,
+   distanceX: 0,
+   distanceY: 0,
+   top: _top,
+   left: _left,
+}
+</code></pre>
+<h3 id="突发性页面尺寸比例变化定位修复">突发性页面尺寸比例变化定位修复</h3>
+<h4 id="场景-3">场景</h4>
+<p>没有通过<code>resize</code>事件触发的页面尺寸变化，通过修改页面宽高等导致页面尺寸变化，这时组件定位不准，需要恢复同比例下组件定位，并保证组件拖拽无异常。</p>
+<h4 id="条件">条件</h4>
+<p>页面原始宽高，变化后页面宽高</p>
+<h4 id="方案">方案</h4>
+<p>根据页面比例，计算出最新组件位置，对组件进行更新位置信息，并清空保存的定位状态信息。</p>
+<p>页面比例 = 页面原始宽高 / 变化后页面宽高</p>
+<p>最新组件位置 = 当前组件位置 / 页面比例</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【转】7分钟理解JS的节流、防抖及使用场景]]></title>
+        <id>https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/</id>
+        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/">
+        </link>
+        <updated>2019-06-03T08:25:49.000Z</updated>
+        <summary type="html"><![CDATA[<p>据说阿里有一道面试题就是谈谈函数节流和函数防抖。 糟了，这可触碰到我的知识盲区了，好像听也没听过这2个东西，痛定思痛，赶紧学习学习。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>据说阿里有一道面试题就是谈谈函数节流和函数防抖。 糟了，这可触碰到我的知识盲区了，好像听也没听过这2个东西，痛定思痛，赶紧学习学习。</p>
+<!-- more -->
+<h2 id="前言">前言</h2>
+<p>据说阿里有一道面试题就是谈谈函数节流和函数防抖。 糟了，这可触碰到我的知识盲区了，好像听也没听过这2个东西，痛定思痛，赶紧学习学习。here we go！</p>
+<h2 id="概念和例子">概念和例子</h2>
+<h4 id="函数防抖debounce">函数防抖(debounce)</h4>
+<blockquote>
+<p>在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。</p>
+</blockquote>
+<p>看一个（栗子）：</p>
+<pre><code>//模拟一段ajax请求
+function ajax(content) {
+  console.log('ajax request ' + content)
+}
+
+let inputa = document.getElementById('unDebounce')
+
+inputa.addEventListener('keyup', function (e) {
+    ajax(e.target.value)
+})
+</code></pre>
+<p>看一下运行结果：</p>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252be5c94d6b?imageslim" alt="image" loading="lazy"></figure>
+<p>可以看到，我们只要按下键盘，就会触发这次ajax请求。不仅从资源上来说是很浪费的行为，而且实际应用中，用户也是输出完整的字符后，才会请求。下面我们优化一下：</p>
+<pre><code>//模拟一段ajax请求
+function ajax(content) {
+  console.log('ajax request ' + content)
+}
+
+function debounce(fun, delay) {
+    return function (args) {
+        let that = this
+        let _args = args
+        clearTimeout(fun.id)
+        fun.id = setTimeout(function () {
+            fun.call(that, _args)
+        }, delay)
+    }
+}
+    
+let inputb = document.getElementById('debounce')
+
+let debounceAjax = debounce(ajax, 500)
+
+inputb.addEventListener('keyup', function (e) {
+        debounceAjax(e.target.value)
+    })
+</code></pre>
+<p>看一下运行结果：</p>
+<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b4b429b56?imageslim" alt="image" loading="lazy"></figure>
+<p>可以看到，我们加入了防抖以后，当你在频繁的输入时，并不会发送请求，只有当你在指定间隔内没有输入时，才会执行函数。如果停止输入但是在指定间隔内又输入，会重新触发计时。 再看一个例子：</p>
+<pre><code>let biu = function () {
+    console.log('biu biu biu',new Date().Format('HH:mm:ss'))
+}
+
+let boom = function () {
+    console.log('boom boom boom',new Date().Format('HH:mm:ss'))
+}
+
+
+setInterval(debounce(biu,500),1000)
+setInterval(debounce(boom,2000),1000)
+</code></pre>
+<p>看一下运行结果：</p>
+<figure data-type="image" tabindex="3"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b4b809a23?imageslim" alt="image" loading="lazy"></figure>
+<p>这个例子就很好的解释了，如果在时间间隔内执行函数，会重新触发计时。biu会在第一次1.5s执行后，每隔1s执行一次，而boom一次也不会执行。因为它的时间间隔是2s，而执行时间是1s，所以每次都会重新触发计时</p>
+<blockquote>
+<p>个人理解 函数防抖就是法师发技能的时候要读条，技能读条没完再按技能就会重新读条。</p>
+</blockquote>
+<h4 id="函数节流throttle">函数节流(throttle)</h4>
+<blockquote>
+<p>规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。</p>
+</blockquote>
+<p>看一个例子：</p>
+<pre><code>function throttle(fun, delay) {
+        let last, deferTimer
+        return function (args) {
+            let that = this
+            let _args = arguments
+            let now = +new Date()
+            if (last &amp;&amp; now &lt; last + delay) {
+                clearTimeout(deferTimer)
+                deferTimer = setTimeout(function () {
+                    last = now
+                    fun.apply(that, _args)
+                }, delay)
+            }else {
+                last = now
+                fun.apply(that,_args)
+            }
+        }
+    }
+
+    let throttleAjax = throttle(ajax, 1000)
+
+    let inputc = document.getElementById('throttle')
+    inputc.addEventListener('keyup', function(e) {
+        throttleAjax(e.target.value)
+    })
+</code></pre>
+<p>看一下运行结果：</p>
+<figure data-type="image" tabindex="4"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b4c1a9686?imageslim" alt="image" loading="lazy"></figure>
+<p>可以看到，我们在不断输入时，ajax会按照我们设定的时间，每1s执行一次。</p>
+<p>结合刚刚biubiubiu的例子：</p>
+<pre><code>    let biubiu = function () {
+        console.log('biu biu biu', new Date().Format('HH:mm:ss'))
+    }
+
+    setInterval(throttle(biubiu,1000),10)
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b46818296?imageslim" alt="image" loading="lazy"></figure>
+<p>不管我们设定的执行时间间隔多小，总是1s内只执行一次。</p>
+<blockquote>
+<p>个人理解 函数节流就是fps游戏的射速，就算一直按着鼠标射击，也只会在规定射速内射出子弹。</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<ul>
+<li>函数防抖和函数节流都是防止某一时间频繁触发，但是这两兄弟之间的原理却不一样。</li>
+<li>函数防抖是某一段时间内只执行一次，而函数节流是间隔时间执行。</li>
+</ul>
+<h4 id="结合应用场景">结合应用场景</h4>
+<ol>
+<li>
+<p>ebounce</p>
+<ul>
+<li>search搜索联想，用户在不断输入值时，用防抖来节约请求资源。<br>
+*window触发resize的时候，不断的调整浏览器窗口大小会不断的触发这个事件，用防抖来让其只触发一次</li>
+</ul>
+</li>
+<li>
+<p>throttle</p>
+<ul>
+<li>鼠标不断点击触发，mousedown(单位时间内只触发一次)</li>
+<li>监听滚动事件，比如是否滑到底部自动加载更多，用throttle来判断</li>
+</ul>
+</li>
+</ol>
+<p><em>转载：作者：薄荷前端<br>
+<a href="https://juejin.im/post/5b8de829f265da43623c4261">链接</a></em></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【转】160行代码仿Vue实现极简双向绑定]]></title>
+        <id>https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/</id>
+        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/">
+        </link>
+        <updated>2019-05-22T08:26:17.000Z</updated>
+        <summary type="html"><![CDATA[<p>精简vue双向绑定机制，对于没有好好研究过这方面知识的同学来说，当然是很难的，接下来本文用160行代码带你实现一个极简的双向绑定机制。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>精简vue双向绑定机制，对于没有好好研究过这方面知识的同学来说，当然是很难的，接下来本文用160行代码带你实现一个极简的双向绑定机制。</p>
+<!-- more -->
+<h2 id="前言">前言</h2>
+<p>现在的前端面试不管你用的什么框架，总会问你这个框架的双向绑定机制，有的甚至要求你现场实现一个双向绑定出来，那对于没有好好研究过这方面知识的同学来说，当然是很难的，接下来本文用160行代码带你实现一个极简的双向绑定机制。</p>
+<h2 id="效果gif">效果GIF：</h2>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2018/6/23/1642bc39f2604b1c?imageslim" alt="image" loading="lazy"></figure>
+<h2 id="了解objectdefineproperty">了解Object.defineProperty()：</h2>
+<p>这个API是实现双向绑定的核心，最主要的作用是重写数据的<code>get</code>、<code>set</code>方法。</p>
+<h3 id="使用方式">使用方式：</h3>
+<pre><code>    let obj = {
+      singer: &quot;周杰伦&quot;
+    };
+    let value = &quot;青花瓷&quot;;
+    Object.defineProperty(obj, &quot;music&quot;, {
+      // value: '七里香', // 设置属性的值 下面设置了get set函数 所以这里不能设置
+      configurable: false, // 是否可以删除属性 默认不能删除
+      // writable: true,  // 是否可以修改对象 下面设置了get set函数 所以这里不能设置
+      enumerable: true, // music是否可以被枚举 默认是不能被枚举(遍历)
+      // ☆ get,set设置时不能设置writable和value，要一对一对设置，交叉设置/同时存在 就会报错
+      get() {
+        // 获取obj.music的时候就会调用get方法
+        // let value = &quot;强行设置get的返回值&quot;; // 打开注释 读取属性永远都是‘强行设置get的返回值’
+        return value;
+      },
+      set(val) {
+        // 将修改的值重新赋给song
+        value = val;
+      }
+    });
+    console.log(obj.music); // 青花瓷
+    delete obj.music; // configurable设为false 删除无效
+    console.log(obj.music); // 青花瓷
+    obj.music = &quot;听妈妈的话&quot;; 
+    console.log(obj.music); // 听妈妈的话
+    for (let key in obj) {
+      // 默认情况下通过`defineProperty`定义的属性是不能被枚举(遍历)的
+      // 需要设置enumerable为true才可以 否则只能拿到singer 属性
+      console.log(key); // singer, music
+    }
+</code></pre>
+<h3 id="画一下重点">画一下重点：</h3>
+<ul>
+<li>get,set设置时不能设置writable和value, 他们是一对情侣的存在，交叉设置或同时存在,会报错</li>
+<li>通过defineProperty设置的属性，默认不能删除，不能遍历，当然你可以通过设置更改他们。</li>
+<li>get、set 是函数，可以做的事情很多。</li>
+</ul>
+<p><strong>兼容性：</strong> IE 9,Firefox 4, Chorme 5,Opera 11.6,Safari 5.1</p>
+<h2 id="实现思路">实现思路：</h2>
+<h3 id="mvvm系列的双向绑定关键步骤">mvvm系列的双向绑定，关键步骤：</h3>
+<ol>
+<li>实现数据监听器Observer，用<code>Object.defineProperty()</code><strong>重写数据的get、set，值更新就在set中通知订阅者更新数据</strong>。</li>
+<li>实现模板编译Compile，深度遍历dom树，对每个元素节点的指令模板进行<strong>替换数据以及订阅数据</strong>。</li>
+<li>实现Watch用于连接Observer和Compile，<strong>能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图</strong>。</li>
+<li>mvvm入口函数，整合以上三者。</li>
+</ol>
+<h3 id="流程图">流程图：</h3>
+<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2018/6/23/1642bcf24d35456f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="image" loading="lazy"></figure>
+<h2 id="具体代码实现">具体代码实现：</h2>
+<h3 id="html结构">html结构：</h3>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+    &lt;input type=&quot;text&quot; v-model=&quot;name&quot;&gt;
+    &lt;h3 v-bind=&quot;name&quot;&gt;&lt;/h3&gt;
+    &lt;input type=&quot;text&quot; v-model=&quot;testData1&quot;&gt;
+    &lt;h3&gt;{{ testData1 }}&lt;/h3&gt;
+    &lt;input type=&quot;text&quot; v-model=&quot;testData2&quot;&gt;
+    &lt;h3&gt;{{ testData2 }}&lt;/h3&gt;
 &lt;/div&gt;
 </code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  border: 1px solid #f00;
-  margin: auto;
-  line-height: 200px;
-  text-align: center;
-}
-.box2 .content{
-  display: inline-block;
-  height: auto;
-  line-height:1;
-  width: 400px;
-  background: #ccc;
+<h3 id="调用方法">调用方法：</h3>
+<p>采用类Vue方式来使用双向绑定：</p>
+<pre><code> window.onload = function () {
+    var app = new myVue({
+        el: '#app', // dom
+        data: { // 数据
+            testData1: '仿Vue',
+            testData2: '极简双向绑定',
+            name: 'OBKoro1'
+        }
+    })
 }
 </code></pre>
-<h2 id="3-before-inline-block">3、:before + inline-block</h2>
-<blockquote>
-<p>适用情景：多对象的CSS垂直居中技巧</p>
-</blockquote>
-<p>:before 伪类元素搭配 inline-block 属性的写法应该是很传统的垂直居中的技巧了，此方式的好处在于子元素居中可以不需要特别设定高度，我们将利用:before伪类元素设定为100%高的inline-block，再搭配上将需要居中的子元素同样设置成inline-block性质后，就能使用vertical-align:middle来达到垂直居中的目的了，此方式在以往其实是个非常棒的垂直居中解决方案，唯独需要特别处理掉inline-block元素之间的4-5px空间这个小缺陷，但也很实用了。</p>
-<pre><code>&lt;h2&gt;3.:before + inline-block&lt;/h2&gt;
-&lt;div class=&quot;box box3&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
+<h3 id="创建myvue函数">创建myVue函数：</h3>
+<p>实际上这里是我们实现思路中的第四步，用于整合数据监听器<code>this._observer()</code>、指令解析器<code>this._compile()</code>以及连接Observer和Compile的_watcherTpl的watch池。</p>
+<pre><code>    function myVue(options = {}) {  // 防止没传，设一个默认值
+        this.$options = options; // 配置挂载
+        this.$el = document.querySelector(options.el); // 获取dom
+        this._data = options.data; // 数据挂载
+        this._watcherTpl = {}; // watcher池
+        this._observer(this._data); // 传入数据，执行函数，重写数据的get set
+        this._compile(this.$el); // 传入dom，执行函数，编译模板 发布订阅
+    };
 </code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  text-align: center;
-}
-.box::before{
-  content:'';
-  display: inline-block;
-  height: 100%;
-  width: 0;
-  vertical-align: middle;
-}
-.box .content{
-  width: 400px;
-  background: #ccc;
-  display: inline-block;
-  vertical-align: middle;
-}
+<h3 id="watcher函数">Watcher函数:</h3>
+<p>这是实现思路中的第三步，因为下方数据监听器_observer()需要用到Watcher函数，所以这里就先讲了。</p>
+<p>像实现思路中所说的，这里起到了连接Observer和Compile的作用：</p>
+<ol>
+<li><strong>在模板编译_compile()阶段发布订阅</strong></li>
+<li><strong>在赋值操作的时候，更新视图</strong></li>
+</ol>
+<pre><code> // new Watcher() 为this._compile()发布订阅+ 在this._observer()中set(赋值)的时候更新视图
+ function Watcher(el, vm, val, attr) {
+     this.el = el; // 指令对应的DOM元素
+     this.vm = vm; // myVue实例
+     this.val = val; // 指令对应的值 
+     this.attr = attr; // dom获取值，如value获取input的值 / innerHTML获取dom的值
+     this.update(); // 更新视图
+ }
+ Watcher.prototype.update = function () { 
+     this.el[this.attr] = this.vm._data[this.val]; // 获取data的最新值 赋值给dom 更新视图
+ }
 </code></pre>
-<h2 id="4-absolute-margin-负值">4、absolute + margin 负值</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>谁说绝对定位要少用？Amos认为没有少用多用的问题，重点在于你是否有妥善运用才是重点，绝对定位在这个例子中会设置top:50%来抓取空间高度的50%，接着在将居中元素的margin-top设定为负一半的高度，这样就能让元素居中了，此方法可是自古以来流传多年的居中方式呢？</p>
-<pre><code>&lt;h2&gt;4.absolute + margin 負值&lt;/h2&gt;
-&lt;div class=&quot;box box4&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
+<p>没有看错，代码量就这么多，可能需要把整个代码连接起来，多看几遍才能够理解。</p>
+<h3 id="实现数据监听器_observer">实现数据监听器_observer()：</h3>
+<p>实现思路中的第一步，用<code>Object.defineProperty()</code>遍历data重写所有属性的get set。</p>
+<p>然后在给对象的某个属性赋值的时候，就会触发set。</p>
+<p><strong>在set中我们可以监听到数据的变化，然后就可以触发watch更新视图。</strong></p>
+<pre><code> myVue.prototype._observer = function (obj) {
+        var _this = this;
+        Object.keys(obj).forEach(key =&gt; { // 遍历数据
+            _this._watcherTpl[key] = { // 每个数据的订阅池()
+                _directives: []
+            };
+            var value = obj[key]; // 获取属性值
+            var watcherTpl = _this._watcherTpl[key]; // 数据的订阅池
+            Object.defineProperty(_this._data, key, { // 双向绑定最重要的部分 重写数据的set get
+                configurable: true,  // 可以删除
+                enumerable: true, // 可以遍历
+                get() {
+                    console.log(`${key}获取值：${value}`);
+                    return value; // 获取值的时候 直接返回
+                },
+                set(newVal) { // 改变值的时候 触发set
+                    console.log(`${key}更新：${newVal}`);
+                    if (value !== newVal) {
+                        value = newVal;
+                        watcherTpl._directives.forEach((item) =&gt; { // 遍历订阅池 
+                            item.update();
+                            // 遍历所有订阅的地方(v-model+v-bind+{{}}) 触发this._compile()中发布的订阅Watcher 更新视图  
+                        });
+                    }
+                }
+            })
+        });
+    }
 </code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  position: relative;
-}
-.box4 .content{
-  width: 400px;
-  background: #ccc;
-  height: 70px;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  margin-left: -200px;
-  margin-top: -35px;
-}
+<h3 id="实现compile-模板编译">实现Compile 模板编译</h3>
+<p>这里是实现思路中的第三步，让我们来总结一下这里做了哪些事情：</p>
+<ul>
+<li>
+<p>首先是深度遍历dom树，遍历每个节点以及子节点。</p>
+</li>
+<li>
+<p>将模板中的变量替换成数据，初始化渲染页面视图。</p>
+</li>
+<li>
+<p>把指令绑定的属性添加到对应的订阅池中</p>
+</li>
+<li>
+<p>一旦数据有变动，收到通知，更新视图。</p>
+</li>
+</ul>
+<pre><code>  myVue.prototype._compile = function (el) {
+      var _this = this, nodes = el.children; // 获取app的dom
+      for (var i = 0, len = nodes.length; i &lt; len; i++) { // 遍历dom节点
+          var node = nodes[i];
+          if (node.children.length) {
+              _this._compile(node);  // 递归深度遍历 dom树
+          }
+          // 如果有v-model属性，并且元素是INPUT或者TEXTAREA，我们监听它的input事件    
+          if (node.hasAttribute('v-model') &amp;&amp; (node.tagName = 'INPUT' || node.tagName == 'TEXTAREA')) {
+              node.addEventListener('input', (function (key) {
+                  var attVal = node.getAttribute('v-model'); // 获取v-model绑定的值
+                  _this._watcherTpl[attVal]._directives.push(new Watcher( // 将dom替换成属性的数据并发布订阅 在set的时候更新数据
+                      node,
+                      _this,
+                      attVal,
+                      'value'
+                  ));
+                  return function () {
+                      _this._data[attVal] = nodes[key].value;  // input值改变的时候 将新值赋给数据 触发set=&gt;set触发watch 更新视图
+                  }
+              })(i));
+          }
+          if (node.hasAttribute('v-bind')) { // v-bind指令 
+              var attrVal = node.getAttribute('v-bind'); // 绑定的data
+              _this._watcherTpl[attrVal]._directives.push(new Watcher( // 将dom替换成属性的数据并发布订阅 在set的时候更新数据
+                  node,
+                  _this,
+                  attrVal,
+                  'innerHTML'
+              ))
+          }
+          var reg = /\{\{\s*([^}]+\S)\s*\}\}/g, txt = node.textContent;   // 正则匹配{{}}
+          if (reg.test(txt)) {
+              node.textContent = txt.replace(reg, (matched, placeholder) =&gt; {
+                  // matched匹配的文本节点包括{{}}, placeholder 是{{}}中间的属性名
+                  var getName = _this._watcherTpl; // 所有绑定watch的数据
+                  getName = getName[placeholder];  // 获取对应watch 数据的值
+                  if (!getName._directives) { // 没有事件池 创建事件池
+                      getName._directives = [];
+                  }
+                  getName._directives.push(new Watcher( // 将dom替换成属性的数据并发布订阅 在set的时候更新数据
+                      node,
+                      _this,
+                      placeholder,
+                      'innerHTML'
+                  ));
+                  return placeholder.split('.').reduce((val, key) =&gt; {
+                      return _this._data[key]; // 获取数据的值 触发get 返回当前值 
+                  }, _this.$el);
+              });
+          }
+      }
+  }
 </code></pre>
-<h2 id="5-absolute-margin-auto">5、absolute + margin auto</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>又一个绝对定位的垂直居中的方案，这个方式比较特别一点，当元素设置为绝对定位后，假设它是抓不到整体可运用的空间范围，所以margin:auto会失效，但当你设置了top:0;bottom:0;时，绝对定位元素就抓到了可运用的空间了，这时你的margin:auto就生效了（神奇吧），如果你的绝对定位元素需要水平居中于父层，那你同样可以设定left:0;right:0;来让绝对定位元素取得空间可运用范围，再让marign-left与margin-right设定为auto即可居中。但此方式的缺点是你的定位元素必须有固定的宽高（百分比也算）才能正常居中。</p>
-<pre><code>&lt;h2&gt;5.absolute + translate(-50%, -50%)&lt;/h2&gt;
-&lt;div class=&quot;box box5&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  position: relative;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  height: 70px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-</code></pre>
-<h2 id="6-absolute-translate">6、absolute + translate</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>在一个绝对定位居中的方式，此方式应该算是最方便的了，因为此居中的定位元素不需要固定的宽高，我们利用绝对定位时的top 与right设置元素的上方跟左方各为50%，再利用translate(-50%,-50%)位移居中元素自身宽与高的50%就能达成居中的目的了。（css3好棒）</p>
-<pre><code>&lt;h2&gt;6.absolute + margin: auto&lt;/h2&gt;
-&lt;div class=&quot;box box6&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  position: relative;
-}
-.box5 .content{
-  width: 400px;
-  background: #ccc;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-</code></pre>
-<h2 id="7flex-align-items">7.Flex + align-items</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>Flex！前端的毒品！后端的宝物！这东西自从面世之后就不断的考验网页开发者的良心，到底要不要抛弃float拥抱flex，我想这答案人人心中自由一把尺，但先碰Flex再碰Float可谓先甜后苦，这顺序到底要倒吃甘蔗还是正吃甘蔗是实在难说，自从有了Flex之后，小孩考试一百分，设计网页不跑版，客户网页都RWD，老板赚钱好开心，我也加薪（加班）好甘心，不由的说Flex真的是一个神物，我们只要设定父层display:flex以及设定次轴(cross axis)属性align-items:center 就好了（说那么多结果重点就一行字是哪招啦），这个方式的优点是此层不需要设定高度即可自动居中，且原始代码干净无比，真的是用一次就让你升天啦。</p>
-<pre><code>&lt;h2&gt;7.Flex + align-items&lt;/h2&gt;
-&lt;div class=&quot;box box7&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-}
-.content{
-  width: 400px;
-  background: #ccc;
-}
-</code></pre>
-<h2 id="8-flex-before-flex-grow">8、Flex + :before + flex-grow</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>Flex有多种方式可以让你把数据居中，适用Flex-grow的延展特性来达成，这个例子中Amos适用了flex-direction:column直式排法，搭配:before伪元素适用flex-grow伸展值能够取得剩下所有空间的特性，把它设定成一半的剩余空间就能做到把内容数据准确的推到垂直中间位置，算是个传统技法的延伸方式。这样的话上面第七个方式不是比较快？</p>
-<pre><code>&lt;h2&gt;8.Flex + before + flex-grow&lt;/h2&gt;
-&lt;div class=&quot;box box8&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.box:before{
-  content: '';
-  flex-grow: .5;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-}
-</code></pre>
-<h2 id="9-flex-margin">9、Flex + margin</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>继续用Flex来居中，由于Flex元素对空间解读的特殊性，我们只要在父层元素设定display:flex，接着在需要垂直居中的元素上设定margin:auto，即可自动居中</p>
-<pre><code>&lt;h2&gt;9.Flex + margin&lt;/h2&gt;
-&lt;div class=&quot;box box9&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: flex;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  margin: auto;
-}
-</code></pre>
-<h2 id="10-flex-align-self">10、Flex + align-self</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>align-self 应该大家都不陌生，基本上就是对flex次轴cross axis 的个别对齐方式只要对单一子层元素设定align-self:center就能达成垂直居中的目的了。</p>
-<pre><code>&lt;h2&gt;10.Flex + align-self&lt;/h2&gt;
-&lt;div class=&quot;box box10&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  align-self: center
-}
-</code></pre>
-<h2 id="11-flex-align-content">11、Flex + align-content</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>在正常的状况下，align-content 仅能对次轴多行flex item做居中，但是当我今天子层元素不确定有多少个时，且有时可能会有单个的情况出现时，此技巧就能用到了（当然你也能有其他解法），既然是多行子元素才能用，那我们就为单个子组件多加两个兄弟吧，使用:before以及:after 来让子元素增加到多个，这样就能使用flex的align-content属性来居中</p>
-<pre><code>&lt;h2&gt;11.Flex + align-content&lt;/h2&gt;
-&lt;div class=&quot;box box11&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-}
-.box11:before,
-.box11:after{
-  content: '';
-  display: block;
-  width:100%;
-}
-</code></pre>
-<h2 id="12-grid-template">12、Grid + template</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>CSS Grid最令人惊讶的就是这个template的功能了，简直就是把块元素当画布在使用，我们仅需要把模板设置成三列，就能搞定垂直居中了</p>
-<pre><code>&lt;h2&gt;12.Grid + template&lt;/h2&gt;
-&lt;div class=&quot;box box12&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: grid;
-  grid-template-rows: 1fr auto 1fr;
-  grid-template-columns: 1fr auto 1fr;
-  grid-template-areas: 
-    '. . .'
-    '. amos .'
-    '. . .';
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  grid-area: amos;
-}
-</code></pre>
-<h2 id="13-grid-align-items">13、Grid + align-items</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>align-items不仅是Flex可用，连CSS Grid也拥有此属性可使用，但在Flex中align-items是针对次轴cross axis作对齐，而在CSS Grid中则是针对Y轴做对齐，你可以把它想象成是表格中储存单元格的vertical-align属性看待，就可以很好理解了</p>
-<pre><code>&lt;h2&gt;13.Grid + align-items&lt;/h2&gt;
-&lt;div class=&quot;box box13&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: grid;
-  justify-content: center;
-  align-items: center; 
-}
-.content{
-  width: 400px;
-  background: #ccc;
-}
-</code></pre>
-<h2 id="14-grid-align-content">14、Grid + align-content</h2>
-<blockquote>
-<p>适用情景：杜航文字的垂直居中技巧</p>
-</blockquote>
-<p>CSS Grid的align-content跟Flex的align-content有点差异，CSS Grid对于空间的解释会跟Flex有一些些的落差，所以导致align-content在Flex中仅能针对多行元素起作用，但在Grid中就没这个问题，所以我们可以很开心的使用align-content来对子元素做垂直居中，丝毫不费力气</p>
-<pre><code>&lt;h2&gt;14.Grid + align-content&lt;/h2&gt;
-&lt;div class=&quot;box box14&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: grid;
-  justify-content: center;
-  align-content: center; 
-}
-.content{
-  width: 400px;
-  background: #ccc;
-}
-</code></pre>
-<h2 id="15-grid-align-self">15、Grid + align-self</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>align-self 应该大家都不陌生，基本上就是对grid Y轴的个别对齐方式，只要对单一子层元素设置为align-self:center就能达成垂直居中的目的了</p>
-<pre><code>&lt;h2&gt;15.Grid + align-self&lt;/h2&gt;
-&lt;div class=&quot;box box15&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: grid;
-  justify-content: center;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  align-self: center;
-}
-</code></pre>
-<h2 id="16-grid-place-items">16、Grid + place-items</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>place-items这属性不知道有多少人用过，此属性是align-items与justify-items的缩写，简单的说就是水平与垂直的对齐方式，想当然的，设定center就能居中</p>
-<pre><code>&lt;h2&gt;16.Grid + place-items&lt;/h2&gt;
-&lt;div class=&quot;box box16&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: grid;
-  height: 150px;
-  margin: 0 auto;
-  place-items: center;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-}
-</code></pre>
-<h2 id="17-grid-place-content">17、Grid + place-content</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>place-content这属性有多少人用过，此属性是align-content与justify-content的缩写，简单的说就是水平与垂直的对齐方式，想当然的，设置center就能居中了</p>
-<pre><code>&lt;h2&gt;17.Grid + place-content&lt;/h2&gt;
-&lt;div class=&quot;box box17&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: grid;
-  height: 150px;
-  margin: 0 auto;
-  place-content: center;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-}
-</code></pre>
-<h2 id="18-grid-margin">18、Grid + margin</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>继续用Grid来居中，由于Grid元素对空间解读的特殊性，我们只要在父层元素设定display:grid，接着在需要垂直居中的元素上设置margin:auto即可自动居中。怎么这描述似曾相识。</p>
-<pre><code>&lt;h2&gt;18.Grid + margin&lt;/h2&gt;
-&lt;div class=&quot;box box18&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  display: grid;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  margin:auto;
-}
-</code></pre>
-<h2 id="19-displaytable-cell">19、Display：table-cell</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>这一招我想有点年纪的开发者应该都有看过，当然像我这么嫩的开发者当然是第一次看到啦，这一招的原理在于使用 CSS display属性将div设置成表格的单元格，这样就能利用支持存储单元格对齐的vertical-align属性来将信息垂直居中</p>
-<pre><code>&lt;h2&gt;19.display: table-cell&lt;/h2&gt;
-&lt;div class=&quot;box box19&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-    text-align: center;
-    display: table-cell;
-  vertical-align: middle;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  margin: auto;
-}
-</code></pre>
-<h2 id="20-calc">20、calc</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>Calc是计算机英文单词calculator的缩写，这个由微软提出的css 方法，真的是网页开发者的一个福音。我们竟然可以在网页中直接做计算，这真是太猛了，从此我们再也不用在那边绞尽脑汁的数学计算了，或是想办法用js来动态计算，我们可以很轻松的利用calc()这个方法，来将百分比及时且动态的计算出实际要的是什么高度，真可谓是划时代的一个方法啊，但这个方法需要注意的是大量使用的话，网页性能会是比较差的，所以请谨慎使用。</p>
-<pre><code>&lt;h2&gt;20.calc&lt;/h2&gt;
-&lt;div class=&quot;box box20&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  position: relative;
-  top:calc((100% - 70px) / 2);
-  margin:auto;
-  height: 70px;
-}
-</code></pre>
-<h2 id="21-relative-translatey">21、Relative + translateY</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>这个技巧是利用了top:50%的招式，让你的元素上方能产生固定百分比的距离，接着让要居中的元素本身使用tanslateY的百分比来达成垂直居中的需求，translate是一个很棒的属性，由于translate的百分比单位是利用元素自身的尺寸作为100%，这样让我们要利用元素自身宽高做事变得方便很多。</p>
-<pre><code>&lt;h2&gt;21.relative + translateY(-50%)&lt;/h2&gt;
-&lt;div class=&quot;box box21&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: auto;
-}
-</code></pre>
-<h2 id="22-padding">22、padding</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直居中技巧</p>
-</blockquote>
-<p>什么！这也算垂直居中技巧，连我奶奶都知道这方式吧</p>
-<p>对的，这的确也算是一种垂直居中的方式，不可讳言的这方式真的是简单过头了，以至于有些开发者认为这种方式都不能算是一种垂直居中的技巧，但同样的你无法反驳的是，我的数据的确垂直居中啦，好啦，就当我硬凹吧，你说的对，好吧</p>
-<pre><code>&lt;h2&gt;22.padding&lt;/h2&gt;
-&lt;div class=&quot;box box22&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    立马来看Amos实际完成的    &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-      CSS3精美相册效果    &lt;/a&gt;
-    效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  border: 1px solid #f00;
-  margin: auto;
-  height: auto;
-  padding: 50px 0;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  margin: auto;
-}
-</code></pre>
-<h2 id="23-write-mode">23、Write-mode</h2>
-<blockquote>
-<p>适用情景：多行文字的垂直剧种技巧</p>
-</blockquote>
-<p>这个方式应该是比较少见到的有人使用的了，这个想法是被老友Paul所激发的，write-mode这个css属性的功能基本上跟垂直居中是八竿子打不着，它的用途是改变文字书写的方向从横变竖，且支持度从很早期的IE5就有支持了，但当时Amos很少使用，一来是网页多是横书较多，另外当时除了IE浏览器意外，其他浏览器的支持度都不是很好，也就很少使用了。</p>
-<p>使用write-mode将一整个文字容器变成直书，接着将此容器利用text-align:center来达到垂直居中的目的，白话一点的解说就是，你把原本横排的文字变成竖排，所以原本横排用到的水平对齐方式，就变成了控制直排的中间了，原理就是这么简单。但要特别注意的是浏览器对此语法的支持度来说，需要拆开写法才行，不然某些浏览器的语法不同，可能会让你的网页在某些浏览器上看起来无效，这会是最需要注意到的</p>
-<pre><code>&lt;h2&gt;23.writing-mode&lt;/h2&gt;立马来看Amos实际完成的
-&lt;div class=&quot;box box23&quot;&gt;
-  &lt;div class=&quot;content&quot;&gt;
-    &lt;div class=&quot;txt&quot;&gt;
-      立马来看Amos实际完成的      &lt;a href=&quot;http://csscoke.com/2015/07/31/nth-child_rwd_album/&quot;&gt;
-        CSS3精美相册效果      &lt;/a&gt;
-      效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！
-      這個置中的想法來自於 Paul 
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code>h2{
-  text-align: center;
-}
-.box{
-  width: 500px;
-  height: 250px;
-  border: 1px solid #f00;
-  margin: auto;
-  writing-mode: tb-lr; /* for ie11 */
-  writing-mode: vertical-lr;
-  text-align: center;
-  margin:0 auto;
-}
-.content{
-  width: 400px;
-  background: #ccc;
-  display: inline-block; /* for ie &amp; edge */
-  width: 100%;
-  writing-mode: lr-tb;
-  margin: auto; 
-  text-align: left;
-}
-.box .txt{
-  width: 80%;
-  margin: auto;
-}
-</code></pre>
-<p><em>关于本文<br>
-作者：@Amos<br>
-原文：<br>
-<a href="http://csscoke.com/2018/08/21/css-vertical-align/">原文地址</a></em></p>
 ]]></content>
     </entry>
     <entry>
@@ -851,7 +645,7 @@
         <id>https://duanjiuzhou.github.io/mengff.github.io/post/vue-ji-yu-hlsjs-de-liu-mei-ti-zhi-bo-ji-ben-yong-fa/</id>
         <link href="https://duanjiuzhou.github.io/mengff.github.io/post/vue-ji-yu-hlsjs-de-liu-mei-ti-zhi-bo-ji-ben-yong-fa/">
         </link>
-        <updated>2020-08-04T08:29:50.000Z</updated>
+        <updated>2019-03-04T08:29:50.000Z</updated>
         <summary type="html"><![CDATA[<p>hls.js是一个实现HTTP Live Streaming客户端的JavaScript库。本篇主要介绍该插件的在vue中基本使用方法。</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>hls.js是一个实现HTTP Live Streaming客户端的JavaScript库。本篇主要介绍该插件的在vue中基本使用方法。</p>
@@ -1084,7 +878,7 @@ this.hls.on(Hls.Events.ERROR, (data) =&gt; {
         <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-wu-zhi-sql-gao-ji-shu-ju-cao-zuo/</id>
         <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-wu-zhi-sql-gao-ji-shu-ju-cao-zuo/">
         </link>
-        <updated>2020-08-04T08:29:20.000Z</updated>
+        <updated>2018-10-18T08:29:20.000Z</updated>
         <summary type="html"><![CDATA[<p>本篇主要总结下mysql中的主键冲突、蠕虫复制、限制数量、查询条件判断、字段别名等使用方法。</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>本篇主要总结下mysql中的主键冲突、蠕虫复制、限制数量、查询条件判断、字段别名等使用方法。</p>
@@ -1353,7 +1147,7 @@ SELECT FOUND_ROWS();
         <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-si-zhi-sql-zhong-wen-shu-ju-wen-ti/</id>
         <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-si-zhi-sql-zhong-wen-shu-ju-wen-ti/">
         </link>
-        <updated>2020-08-04T08:28:24.000Z</updated>
+        <updated>2018-10-15T08:28:24.000Z</updated>
         <summary type="html"><![CDATA[<p>SQL 里中文数据问题的本质是字符集问题。计算机只能识别二进制，人类更多的是识别符号；需要有一个二进制与字符的对应关系（字符集）...</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>SQL 里中文数据问题的本质是字符集问题。计算机只能识别二进制，人类更多的是识别符号；需要有一个二进制与字符的对应关系（字符集）...</p>
@@ -1385,11 +1179,105 @@ set character_set_client = gbk;
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[js 判断数据类型四种方法]]></title>
+        <id>https://duanjiuzhou.github.io/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/</id>
+        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/">
+        </link>
+        <updated>2018-10-10T08:30:44.000Z</updated>
+        <summary type="html"><![CDATA[<p>鉴于 js 是松散类型的，因此需有一种手段来检测给定变量的数据类型。对此Js 也提供多种方法，但遗憾的是，不同的方法得到的结果参差不齐。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>鉴于 js 是松散类型的，因此需有一种手段来检测给定变量的数据类型。对此Js 也提供多种方法，但遗憾的是，不同的方法得到的结果参差不齐。</p>
+<!-- more -->
+<h2 id="1-typeof">1、typeof</h2>
+<p>typeof 是一个操作符，其右侧跟一个一元表达式，并返回这个表达式的数据类型。返回的结果用该类型的字符串(全小写字母)形式表示，包括以下 7 种：number、boolean、symbol、string、object、undefined、function 等。</p>
+<pre><code>   typeof ''; // string 有效
+   typeof 1; // number 有效
+   typeof Symbol(); // symbol 有效
+   typeof true; //boolean 有效
+   typeof undefined; //undefined 有效
+   typeof null; //object 无效
+   typeof [] ; //object 无效
+   typeof new Function(); // function 有效
+   typeof new Date(); //object 无效
+   typeof new RegExp(); //object 无效
+</code></pre>
+<h2 id="2-instanceof">2、instanceof</h2>
+<p>instanceof 是用来判断 A 是否为 B 的实例，表达式为：A instanceof B，如果 A 是 B 的实例，则返回 true,否则返回 false。 在这里需要特别注意的是：instanceof 检测的是原型</p>
+<pre><code>   [] instanceof Array; // true
+   {} instanceof Object;// true
+   new Date() instanceof Date;// true
+    
+   function Person(){};
+   new Person() instanceof Person;
+    
+   [] instanceof Object; // true
+   new Date() instanceof Object;// true
+   new Person instanceof Object;// true
+</code></pre>
+<h2 id="3-constructor">3、constructor</h2>
+<p>对象的constructor属性用于返回创建该对象的函数</p>
+<pre><code>   var test=new Array();
+   
+   if (test.constructor==Array)
+   {
+   document.write(&quot;This is an Array&quot;);
+   }
+   if (test.constructor==Boolean)
+   {
+   document.write(&quot;This is a Boolean&quot;);
+   }
+   if (test.constructor==Date)
+   {
+   document.write(&quot;This is a Date&quot;);
+   }
+   if (test.constructor==String)
+   {
+   document.write(&quot;This is a String&quot;);
+   }
+</code></pre>
+<blockquote>
+<p>细节问题：</p>
+</blockquote>
+<ol>
+<li>
+<p>null 和 undefined 是无效的对象，因此是不会有 constructor 存在的，这两种类型的数据需要通过其他方式来判断。</p>
+</li>
+<li>
+<p>函数的 constructor 是不稳定的，这个主要体现在自定义对象上，当开发者重写 prototype 后，原有的 constructor 引用会丢失，constructor 会默认为 Object</p>
+</li>
+</ol>
+<h2 id="4-tostring">4、toString</h2>
+<p>toString() 是 Object 的原型方法，调用该方法，默认返回当前对象的 [[Class]] 。这是一个内部属性，其格式为 [object Xxx] ，其中 Xxx 就是对象的类型。</p>
+<p>对于 Object 对象，直接调用 toString()  就能返回 [object Object] 。而对于其他对象，则需要通过 call / apply 来调用才能返回正确的类型信息。</p>
+<pre><code>    Object.prototype.toString.call('') ;   // [object String]
+    Object.prototype.toString.call(1) ;    // [object Number]
+    Object.prototype.toString.call(true) ; // [object Boolean]
+    Object.prototype.toString.call(Symbol()); //[object Symbol]
+    Object.prototype.toString.call(undefined) ; // [object Undefined]
+    Object.prototype.toString.call(null) ; // [object Null]
+    Object.prototype.toString.call(new Function()) ; // [object Function]
+    Object.prototype.toString.call(new Date()) ; // [object Date]
+    Object.prototype.toString.call([]) ; // [object Array]
+    Object.prototype.toString.call(new RegExp()) ; // [object RegExp]
+    Object.prototype.toString.call(new Error()) ; // [object Error]
+    Object.prototype.toString.call(document) ; // [object HTMLDocument]
+    Object.prototype.toString.call(window) ; //[object global] window 是全局对象 global 的引用
+</code></pre>
+<p>方法：</p>
+<pre><code>export const typeExamine = (value: any) =&gt; {
+  return Reflect.apply(Object.prototype.toString, value, [])
+    .replace(/^\[object\s(\w+)\]$/, &quot;$1&quot;)
+    .toLowerCase();
+};
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[mysql操作 (三) 之SQL 数据操作]]></title>
         <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-san-zhi-sql-shu-ju-cao-zuo/</id>
         <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-san-zhi-sql-shu-ju-cao-zuo/">
         </link>
-        <updated>2020-08-04T08:26:26.000Z</updated>
+        <updated>2018-10-04T08:26:26.000Z</updated>
         <summary type="html"><![CDATA[<p>本篇主要介绍mysql中的数据操作，一些基础的增删改查，常规的使用方法，一起来看吧。</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>本篇主要介绍mysql中的数据操作，一些基础的增删改查，常规的使用方法，一起来看吧。</p>
@@ -1459,385 +1347,11 @@ delete from my_student where sex = 'male';
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[【转】160行代码仿Vue实现极简双向绑定]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/">
-        </link>
-        <updated>2020-08-04T08:26:17.000Z</updated>
-        <summary type="html"><![CDATA[<p>精简vue双向绑定机制，对于没有好好研究过这方面知识的同学来说，当然是很难的，接下来本文用160行代码带你实现一个极简的双向绑定机制。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>精简vue双向绑定机制，对于没有好好研究过这方面知识的同学来说，当然是很难的，接下来本文用160行代码带你实现一个极简的双向绑定机制。</p>
-<!-- more -->
-<h2 id="前言">前言</h2>
-<p>现在的前端面试不管你用的什么框架，总会问你这个框架的双向绑定机制，有的甚至要求你现场实现一个双向绑定出来，那对于没有好好研究过这方面知识的同学来说，当然是很难的，接下来本文用160行代码带你实现一个极简的双向绑定机制。</p>
-<h2 id="效果gif">效果GIF：</h2>
-<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2018/6/23/1642bc39f2604b1c?imageslim" alt="image" loading="lazy"></figure>
-<h2 id="了解objectdefineproperty">了解Object.defineProperty()：</h2>
-<p>这个API是实现双向绑定的核心，最主要的作用是重写数据的<code>get</code>、<code>set</code>方法。</p>
-<h3 id="使用方式">使用方式：</h3>
-<pre><code>    let obj = {
-      singer: &quot;周杰伦&quot;
-    };
-    let value = &quot;青花瓷&quot;;
-    Object.defineProperty(obj, &quot;music&quot;, {
-      // value: '七里香', // 设置属性的值 下面设置了get set函数 所以这里不能设置
-      configurable: false, // 是否可以删除属性 默认不能删除
-      // writable: true,  // 是否可以修改对象 下面设置了get set函数 所以这里不能设置
-      enumerable: true, // music是否可以被枚举 默认是不能被枚举(遍历)
-      // ☆ get,set设置时不能设置writable和value，要一对一对设置，交叉设置/同时存在 就会报错
-      get() {
-        // 获取obj.music的时候就会调用get方法
-        // let value = &quot;强行设置get的返回值&quot;; // 打开注释 读取属性永远都是‘强行设置get的返回值’
-        return value;
-      },
-      set(val) {
-        // 将修改的值重新赋给song
-        value = val;
-      }
-    });
-    console.log(obj.music); // 青花瓷
-    delete obj.music; // configurable设为false 删除无效
-    console.log(obj.music); // 青花瓷
-    obj.music = &quot;听妈妈的话&quot;; 
-    console.log(obj.music); // 听妈妈的话
-    for (let key in obj) {
-      // 默认情况下通过`defineProperty`定义的属性是不能被枚举(遍历)的
-      // 需要设置enumerable为true才可以 否则只能拿到singer 属性
-      console.log(key); // singer, music
-    }
-</code></pre>
-<h3 id="画一下重点">画一下重点：</h3>
-<ul>
-<li>get,set设置时不能设置writable和value, 他们是一对情侣的存在，交叉设置或同时存在,会报错</li>
-<li>通过defineProperty设置的属性，默认不能删除，不能遍历，当然你可以通过设置更改他们。</li>
-<li>get、set 是函数，可以做的事情很多。</li>
-</ul>
-<p><strong>兼容性：</strong> IE 9,Firefox 4, Chorme 5,Opera 11.6,Safari 5.1</p>
-<h2 id="实现思路">实现思路：</h2>
-<h3 id="mvvm系列的双向绑定关键步骤">mvvm系列的双向绑定，关键步骤：</h3>
-<ol>
-<li>实现数据监听器Observer，用<code>Object.defineProperty()</code><strong>重写数据的get、set，值更新就在set中通知订阅者更新数据</strong>。</li>
-<li>实现模板编译Compile，深度遍历dom树，对每个元素节点的指令模板进行<strong>替换数据以及订阅数据</strong>。</li>
-<li>实现Watch用于连接Observer和Compile，<strong>能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图</strong>。</li>
-<li>mvvm入口函数，整合以上三者。</li>
-</ol>
-<h3 id="流程图">流程图：</h3>
-<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2018/6/23/1642bcf24d35456f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="image" loading="lazy"></figure>
-<h2 id="具体代码实现">具体代码实现：</h2>
-<h3 id="html结构">html结构：</h3>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-    &lt;input type=&quot;text&quot; v-model=&quot;name&quot;&gt;
-    &lt;h3 v-bind=&quot;name&quot;&gt;&lt;/h3&gt;
-    &lt;input type=&quot;text&quot; v-model=&quot;testData1&quot;&gt;
-    &lt;h3&gt;{{ testData1 }}&lt;/h3&gt;
-    &lt;input type=&quot;text&quot; v-model=&quot;testData2&quot;&gt;
-    &lt;h3&gt;{{ testData2 }}&lt;/h3&gt;
-&lt;/div&gt;
-</code></pre>
-<h3 id="调用方法">调用方法：</h3>
-<p>采用类Vue方式来使用双向绑定：</p>
-<pre><code> window.onload = function () {
-    var app = new myVue({
-        el: '#app', // dom
-        data: { // 数据
-            testData1: '仿Vue',
-            testData2: '极简双向绑定',
-            name: 'OBKoro1'
-        }
-    })
-}
-</code></pre>
-<h3 id="创建myvue函数">创建myVue函数：</h3>
-<p>实际上这里是我们实现思路中的第四步，用于整合数据监听器<code>this._observer()</code>、指令解析器<code>this._compile()</code>以及连接Observer和Compile的_watcherTpl的watch池。</p>
-<pre><code>    function myVue(options = {}) {  // 防止没传，设一个默认值
-        this.$options = options; // 配置挂载
-        this.$el = document.querySelector(options.el); // 获取dom
-        this._data = options.data; // 数据挂载
-        this._watcherTpl = {}; // watcher池
-        this._observer(this._data); // 传入数据，执行函数，重写数据的get set
-        this._compile(this.$el); // 传入dom，执行函数，编译模板 发布订阅
-    };
-</code></pre>
-<h3 id="watcher函数">Watcher函数:</h3>
-<p>这是实现思路中的第三步，因为下方数据监听器_observer()需要用到Watcher函数，所以这里就先讲了。</p>
-<p>像实现思路中所说的，这里起到了连接Observer和Compile的作用：</p>
-<ol>
-<li><strong>在模板编译_compile()阶段发布订阅</strong></li>
-<li><strong>在赋值操作的时候，更新视图</strong></li>
-</ol>
-<pre><code> // new Watcher() 为this._compile()发布订阅+ 在this._observer()中set(赋值)的时候更新视图
- function Watcher(el, vm, val, attr) {
-     this.el = el; // 指令对应的DOM元素
-     this.vm = vm; // myVue实例
-     this.val = val; // 指令对应的值 
-     this.attr = attr; // dom获取值，如value获取input的值 / innerHTML获取dom的值
-     this.update(); // 更新视图
- }
- Watcher.prototype.update = function () { 
-     this.el[this.attr] = this.vm._data[this.val]; // 获取data的最新值 赋值给dom 更新视图
- }
-</code></pre>
-<p>没有看错，代码量就这么多，可能需要把整个代码连接起来，多看几遍才能够理解。</p>
-<h3 id="实现数据监听器_observer">实现数据监听器_observer()：</h3>
-<p>实现思路中的第一步，用<code>Object.defineProperty()</code>遍历data重写所有属性的get set。</p>
-<p>然后在给对象的某个属性赋值的时候，就会触发set。</p>
-<p><strong>在set中我们可以监听到数据的变化，然后就可以触发watch更新视图。</strong></p>
-<pre><code> myVue.prototype._observer = function (obj) {
-        var _this = this;
-        Object.keys(obj).forEach(key =&gt; { // 遍历数据
-            _this._watcherTpl[key] = { // 每个数据的订阅池()
-                _directives: []
-            };
-            var value = obj[key]; // 获取属性值
-            var watcherTpl = _this._watcherTpl[key]; // 数据的订阅池
-            Object.defineProperty(_this._data, key, { // 双向绑定最重要的部分 重写数据的set get
-                configurable: true,  // 可以删除
-                enumerable: true, // 可以遍历
-                get() {
-                    console.log(`${key}获取值：${value}`);
-                    return value; // 获取值的时候 直接返回
-                },
-                set(newVal) { // 改变值的时候 触发set
-                    console.log(`${key}更新：${newVal}`);
-                    if (value !== newVal) {
-                        value = newVal;
-                        watcherTpl._directives.forEach((item) =&gt; { // 遍历订阅池 
-                            item.update();
-                            // 遍历所有订阅的地方(v-model+v-bind+{{}}) 触发this._compile()中发布的订阅Watcher 更新视图  
-                        });
-                    }
-                }
-            })
-        });
-    }
-</code></pre>
-<h3 id="实现compile-模板编译">实现Compile 模板编译</h3>
-<p>这里是实现思路中的第三步，让我们来总结一下这里做了哪些事情：</p>
-<ul>
-<li>
-<p>首先是深度遍历dom树，遍历每个节点以及子节点。</p>
-</li>
-<li>
-<p>将模板中的变量替换成数据，初始化渲染页面视图。</p>
-</li>
-<li>
-<p>把指令绑定的属性添加到对应的订阅池中</p>
-</li>
-<li>
-<p>一旦数据有变动，收到通知，更新视图。</p>
-</li>
-</ul>
-<pre><code>  myVue.prototype._compile = function (el) {
-      var _this = this, nodes = el.children; // 获取app的dom
-      for (var i = 0, len = nodes.length; i &lt; len; i++) { // 遍历dom节点
-          var node = nodes[i];
-          if (node.children.length) {
-              _this._compile(node);  // 递归深度遍历 dom树
-          }
-          // 如果有v-model属性，并且元素是INPUT或者TEXTAREA，我们监听它的input事件    
-          if (node.hasAttribute('v-model') &amp;&amp; (node.tagName = 'INPUT' || node.tagName == 'TEXTAREA')) {
-              node.addEventListener('input', (function (key) {
-                  var attVal = node.getAttribute('v-model'); // 获取v-model绑定的值
-                  _this._watcherTpl[attVal]._directives.push(new Watcher( // 将dom替换成属性的数据并发布订阅 在set的时候更新数据
-                      node,
-                      _this,
-                      attVal,
-                      'value'
-                  ));
-                  return function () {
-                      _this._data[attVal] = nodes[key].value;  // input值改变的时候 将新值赋给数据 触发set=&gt;set触发watch 更新视图
-                  }
-              })(i));
-          }
-          if (node.hasAttribute('v-bind')) { // v-bind指令 
-              var attrVal = node.getAttribute('v-bind'); // 绑定的data
-              _this._watcherTpl[attrVal]._directives.push(new Watcher( // 将dom替换成属性的数据并发布订阅 在set的时候更新数据
-                  node,
-                  _this,
-                  attrVal,
-                  'innerHTML'
-              ))
-          }
-          var reg = /\{\{\s*([^}]+\S)\s*\}\}/g, txt = node.textContent;   // 正则匹配{{}}
-          if (reg.test(txt)) {
-              node.textContent = txt.replace(reg, (matched, placeholder) =&gt; {
-                  // matched匹配的文本节点包括{{}}, placeholder 是{{}}中间的属性名
-                  var getName = _this._watcherTpl; // 所有绑定watch的数据
-                  getName = getName[placeholder];  // 获取对应watch 数据的值
-                  if (!getName._directives) { // 没有事件池 创建事件池
-                      getName._directives = [];
-                  }
-                  getName._directives.push(new Watcher( // 将dom替换成属性的数据并发布订阅 在set的时候更新数据
-                      node,
-                      _this,
-                      placeholder,
-                      'innerHTML'
-                  ));
-                  return placeholder.split('.').reduce((val, key) =&gt; {
-                      return _this._data[key]; // 获取数据的值 触发get 返回当前值 
-                  }, _this.$el);
-              });
-          }
-      }
-  }
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【转】7分钟理解JS的节流、防抖及使用场景]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/">
-        </link>
-        <updated>2020-08-04T08:25:49.000Z</updated>
-        <summary type="html"><![CDATA[<p>据说阿里有一道面试题就是谈谈函数节流和函数防抖。 糟了，这可触碰到我的知识盲区了，好像听也没听过这2个东西，痛定思痛，赶紧学习学习。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>据说阿里有一道面试题就是谈谈函数节流和函数防抖。 糟了，这可触碰到我的知识盲区了，好像听也没听过这2个东西，痛定思痛，赶紧学习学习。</p>
-<!-- more -->
-<h2 id="前言">前言</h2>
-<p>据说阿里有一道面试题就是谈谈函数节流和函数防抖。 糟了，这可触碰到我的知识盲区了，好像听也没听过这2个东西，痛定思痛，赶紧学习学习。here we go！</p>
-<h2 id="概念和例子">概念和例子</h2>
-<h4 id="函数防抖debounce">函数防抖(debounce)</h4>
-<blockquote>
-<p>在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。</p>
-</blockquote>
-<p>看一个（栗子）：</p>
-<pre><code>//模拟一段ajax请求
-function ajax(content) {
-  console.log('ajax request ' + content)
-}
-
-let inputa = document.getElementById('unDebounce')
-
-inputa.addEventListener('keyup', function (e) {
-    ajax(e.target.value)
-})
-</code></pre>
-<p>看一下运行结果：</p>
-<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252be5c94d6b?imageslim" alt="image" loading="lazy"></figure>
-<p>可以看到，我们只要按下键盘，就会触发这次ajax请求。不仅从资源上来说是很浪费的行为，而且实际应用中，用户也是输出完整的字符后，才会请求。下面我们优化一下：</p>
-<pre><code>//模拟一段ajax请求
-function ajax(content) {
-  console.log('ajax request ' + content)
-}
-
-function debounce(fun, delay) {
-    return function (args) {
-        let that = this
-        let _args = args
-        clearTimeout(fun.id)
-        fun.id = setTimeout(function () {
-            fun.call(that, _args)
-        }, delay)
-    }
-}
-    
-let inputb = document.getElementById('debounce')
-
-let debounceAjax = debounce(ajax, 500)
-
-inputb.addEventListener('keyup', function (e) {
-        debounceAjax(e.target.value)
-    })
-</code></pre>
-<p>看一下运行结果：</p>
-<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b4b429b56?imageslim" alt="image" loading="lazy"></figure>
-<p>可以看到，我们加入了防抖以后，当你在频繁的输入时，并不会发送请求，只有当你在指定间隔内没有输入时，才会执行函数。如果停止输入但是在指定间隔内又输入，会重新触发计时。 再看一个例子：</p>
-<pre><code>let biu = function () {
-    console.log('biu biu biu',new Date().Format('HH:mm:ss'))
-}
-
-let boom = function () {
-    console.log('boom boom boom',new Date().Format('HH:mm:ss'))
-}
-
-
-setInterval(debounce(biu,500),1000)
-setInterval(debounce(boom,2000),1000)
-</code></pre>
-<p>看一下运行结果：</p>
-<figure data-type="image" tabindex="3"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b4b809a23?imageslim" alt="image" loading="lazy"></figure>
-<p>这个例子就很好的解释了，如果在时间间隔内执行函数，会重新触发计时。biu会在第一次1.5s执行后，每隔1s执行一次，而boom一次也不会执行。因为它的时间间隔是2s，而执行时间是1s，所以每次都会重新触发计时</p>
-<blockquote>
-<p>个人理解 函数防抖就是法师发技能的时候要读条，技能读条没完再按技能就会重新读条。</p>
-</blockquote>
-<h4 id="函数节流throttle">函数节流(throttle)</h4>
-<blockquote>
-<p>规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。</p>
-</blockquote>
-<p>看一个例子：</p>
-<pre><code>function throttle(fun, delay) {
-        let last, deferTimer
-        return function (args) {
-            let that = this
-            let _args = arguments
-            let now = +new Date()
-            if (last &amp;&amp; now &lt; last + delay) {
-                clearTimeout(deferTimer)
-                deferTimer = setTimeout(function () {
-                    last = now
-                    fun.apply(that, _args)
-                }, delay)
-            }else {
-                last = now
-                fun.apply(that,_args)
-            }
-        }
-    }
-
-    let throttleAjax = throttle(ajax, 1000)
-
-    let inputc = document.getElementById('throttle')
-    inputc.addEventListener('keyup', function(e) {
-        throttleAjax(e.target.value)
-    })
-</code></pre>
-<p>看一下运行结果：</p>
-<figure data-type="image" tabindex="4"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b4c1a9686?imageslim" alt="image" loading="lazy"></figure>
-<p>可以看到，我们在不断输入时，ajax会按照我们设定的时间，每1s执行一次。</p>
-<p>结合刚刚biubiubiu的例子：</p>
-<pre><code>    let biubiu = function () {
-        console.log('biu biu biu', new Date().Format('HH:mm:ss'))
-    }
-
-    setInterval(throttle(biubiu,1000),10)
-</code></pre>
-<figure data-type="image" tabindex="5"><img src="https://user-gold-cdn.xitu.io/2018/9/4/165a252b46818296?imageslim" alt="image" loading="lazy"></figure>
-<p>不管我们设定的执行时间间隔多小，总是1s内只执行一次。</p>
-<blockquote>
-<p>个人理解 函数节流就是fps游戏的射速，就算一直按着鼠标射击，也只会在规定射速内射出子弹。</p>
-</blockquote>
-<h2 id="总结">总结</h2>
-<ul>
-<li>函数防抖和函数节流都是防止某一时间频繁触发，但是这两兄弟之间的原理却不一样。</li>
-<li>函数防抖是某一段时间内只执行一次，而函数节流是间隔时间执行。</li>
-</ul>
-<h4 id="结合应用场景">结合应用场景</h4>
-<ol>
-<li>
-<p>ebounce</p>
-<ul>
-<li>search搜索联想，用户在不断输入值时，用防抖来节约请求资源。<br>
-*window触发resize的时候，不断的调整浏览器窗口大小会不断的触发这个事件，用防抖来让其只触发一次</li>
-</ul>
-</li>
-<li>
-<p>throttle</p>
-<ul>
-<li>鼠标不断点击触发，mousedown(单位时间内只触发一次)</li>
-<li>监听滚动事件，比如是否滑到底部自动加载更多，用throttle来判断</li>
-</ul>
-</li>
-</ol>
-<p><em>转载：作者：薄荷前端<br>
-<a href="https://juejin.im/post/5b8de829f265da43623c4261">链接</a></em></p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[mysql操作 (二) 之SQL 表操作（字段）]]></title>
         <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-er-zhi-sql-biao-cao-zuo-zi-duan/</id>
         <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-er-zhi-sql-biao-cao-zuo-zi-duan/">
         </link>
-        <updated>2020-08-04T08:25:27.000Z</updated>
+        <updated>2018-09-23T08:25:27.000Z</updated>
         <content type="html"><![CDATA[<h2 id="sql-表操作字段">SQL 表操作（字段）</h2>
 <blockquote>
 <p>新增数据表</p>
@@ -2019,125 +1533,6 @@ alter table my_student change gender sex varchar(10);
 <li>在数据库对应的文件夹下，表对应的文件（与存储引擎有关）也删除了。</li>
 </ul>
 <p>注意：删除有危险操作需谨慎（不可逆）</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[mysql操作 (一) 之基本指令、SQL 库操作]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-yi-zhi-ji-ben-zhi-ling-sql-ku-cao-zuo/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-yi-zhi-ji-ben-zhi-ling-sql-ku-cao-zuo/">
-        </link>
-        <updated>2020-08-04T08:24:55.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1-基本指令">1、基本指令</h2>
-<pre><code>mysql -u root -p  --连接数据库
-use &lt;数据库名&gt;    --使用数据库
-show databases    --查询所有数据库 注：use 数据库后才能操作
-exit/quilt/\q     --断开连接 三种方式
-</code></pre>
-<p><strong>注意：</strong></p>
-<p>数据库名字以字母数字下划线组成，不能以数字开头。</p>
-<p>-- 双中划线+空格：注释（单行注释），也可以使用#号</p>
-<h2 id="2-sql-库操作">2、SQL 库操作</h2>
-<blockquote>
-<p>新增数据库</p>
-</blockquote>
-<p>基本语法</p>
-<pre><code>create database 数据库名字 [库选项];
-
-例：
-create database myDatabase charset utf8;
-</code></pre>
-<p><strong>库选项：</strong></p>
-<p>用来约束数据库，分为两个选项：</p>
-<p>字符集设定：charset/character set 具体字符集（数据存储的编码格式）：常用字符集 GBK和UTF8</p>
-<p>校对集设定：collate具体校对集（数据比较的规则）</p>
-<p><strong>注意：</strong></p>
-<ol>
-<li>
-<p>数据库名字不能使用关键字（已经被使用的字符）或者保留字（将来可能用到的）</p>
-<pre><code>-- 创建关键字数据库 会报错
-create database database charset utf8;
-</code></pre>
-<p>如果非要使用关键字或者保留字，那么必须使用反引号``。</p>
-<pre><code>-- 使用反引号 包裹关键字
-create database `database` charset utf8;
-</code></pre>
-</li>
-<li>
-<p>中文数据库是可以的，但是有个前提条件：保证服务器能够识别。（建议不用）</p>
-<pre><code>-- 创建中文数据库
-create database `中国` charset utf8;  // 报错
-create database 中国 charset utf8;    // 报错
-</code></pre>
-<p>解决方案：</p>
-<p>告诉服务器当前中文的字符集是什么</p>
-<pre><code>set names gbk;
-create database 中国 charset utf8;
-</code></pre>
-</li>
-<li>
-<p>当创建数据库的SQL语句执行以后，发生了什么？</p>
-<ul>
-<li>在数据库系统中，增加了对应的数据库信息</li>
-<li>会在保存数据的文件夹下，data目录，创建一个对应数据库名字的文件夹</li>
-<li>每个数据库下都有一个opt文件</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>查看数据库</p>
-</blockquote>
-<ol>
-<li>
-<p>查看所有数据库</p>
-<pre><code>show databases;
-</code></pre>
-</li>
-<li>
-<p>查看指定部分的数据库：模糊查询</p>
-<pre><code>show databases like 'pattern';    --pattern 是匹配模式
-%：表示匹配多个字符
-_：表示匹配单个字符
-</code></pre>
-<p>例：</p>
-<pre><code>-- 查看以inform_开始的数据库：_需要被转义
-show database like 'inform\_%';
-
-show database like 'inform_%';  -- 相当于inform%
-</code></pre>
-</li>
-<li>
-<p>查看数据库的创建语句</p>
-<pre><code>show create database 数据库名字;
-</code></pre>
-</li>
-</ol>
-<blockquote>
-<p>更新数据库</p>
-</blockquote>
-<p>数据库名字不可以修改。</p>
-<p>数据库的修改仅限于库选项：字符集和校对集（校对集依赖于字符集）</p>
-<p>基本格式：</p>
-<pre><code>alter database 数据库名字 [库选项];
-charset/charset set[=] 字符集
-collate 校对集
-</code></pre>
-<p>例：</p>
-<pre><code>-- 修改数据库inform的字符集
-alter database inform chartset GBK;
-</code></pre>
-<blockquote>
-<p>删除数据库</p>
-</blockquote>
-<p>基本格式：</p>
-<pre><code>drop database 数据库名字;
-</code></pre>
-<p>当删除数据库语句执行之后发生什么？</p>
-<ul>
-<li>在数据库内部看不到对应的数据库；</li>
-<li>在对应的数据库存储的文件夹中：数据库名字对应的文件夹也被删除（级联删除：里面的数据表全部删除）</li>
-</ul>
-<p><strong>注意：</strong></p>
-<p>数据库不要随意删除，应该先进行备份后操作。（删除不可逆）</p>
 ]]></content>
     </entry>
 </feed>
