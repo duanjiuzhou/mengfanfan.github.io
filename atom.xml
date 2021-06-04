@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://duanjiuzhou.github.io/mengff.github.io/</id>
+    <id>https://duanjiuzhou/mengff.github.io/</id>
     <title>孟饭饭的独立博客</title>
-    <updated>2020-08-05T03:32:58.239Z</updated>
+    <updated>2021-06-04T01:39:55.275Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://duanjiuzhou.github.io/mengff.github.io/"/>
-    <link rel="self" href="https://duanjiuzhou.github.io/mengff.github.io/atom.xml"/>
+    <link rel="alternate" href="https://duanjiuzhou/mengff.github.io/"/>
+    <link rel="self" href="https://duanjiuzhou/mengff.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://duanjiuzhou.github.io/mengff.github.io/images/avatar.png</logo>
-    <icon>https://duanjiuzhou.github.io/mengff.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 孟饭饭的独立博客</rights>
+    <logo>https://duanjiuzhou/mengff.github.io/images/avatar.png</logo>
+    <icon>https://duanjiuzhou/mengff.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, 孟饭饭的独立博客</rights>
     <entry>
         <title type="html"><![CDATA[Git Commit Message 提交规范配置说明]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/git-commit-message-ti-jiao-gui-fan-pei-zhi-shuo-ming/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/git-commit-message-ti-jiao-gui-fan-pei-zhi-shuo-ming/">
+        <id>https://duanjiuzhou/mengff.github.io/post/git-commit-message-ti-jiao-gui-fan-pei-zhi-shuo-ming/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/git-commit-message-ti-jiao-gui-fan-pei-zhi-shuo-ming/">
         </link>
         <updated>2020-05-23T06:31:55.000Z</updated>
         <summary type="html"><![CDATA[<h2 id="描述">描述</h2>
@@ -111,7 +111,7 @@ module.exports = {
 }
 </code></pre>
 <p>效果如下：</p>
-<figure data-type="image" tabindex="1"><img src="https://duanjiuzhou.github.io/mengff.github.io//post-images/1590216132807.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://duanjiuzhou/mengff.github.io//post-images/1590216132807.png" alt="" loading="lazy"></figure>
 <h3 id="commitlint-校验你的-message">Commitlint: 校验你的 message</h3>
 <p>commitlint: 可以帮助我们 lint commit messages, 如果我们提交的不符合指向的规范, 直接拒绝提交。</p>
 <pre><code>yarn add commitlint-config-cz @commitlint/cli --dev
@@ -142,8 +142,8 @@ module.exports = {
     </entry>
     <entry>
         <title type="html"><![CDATA[满足大屏场景的拖拽组件原理说明]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming/">
+        <id>https://duanjiuzhou/mengff.github.io/post/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/man-zu-da-ping-chang-jing-de-tuo-zhuai-zu-jian-yuan-li-shuo-ming/">
         </link>
         <updated>2020-05-22T01:50:31.000Z</updated>
         <summary type="html"><![CDATA[<p>✍️ 源于大屏场景下，由于进行适配页面尺寸，随着页面尺寸的频繁变化，导致拖拽组件的定位失效，引起拖拽异常......</p>
@@ -166,7 +166,7 @@ module.exports = {
 </ul>
 <h4 id="原理说明">原理说明</h4>
 <h5 id="原理图">原理图🍥</h5>
-<figure data-type="image" tabindex="1"><img src="https://duanjiuzhou.github.io/mengff.github.io//post-images/1590112364894.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://duanjiuzhou/mengff.github.io//post-images/1590112364894.png" alt="" loading="lazy"></figure>
 <h5 id="状态参数">状态参数</h5>
 <pre><code>const dragData = 
 {
@@ -268,8 +268,8 @@ dragData = {
     </entry>
     <entry>
         <title type="html"><![CDATA[【转】7分钟理解JS的节流、防抖及使用场景]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/">
+        <id>https://duanjiuzhou/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/zhuan-7-fen-zhong-li-jie-js-de-jie-liu-fang-dou-ji-shi-yong-chang-jing/">
         </link>
         <updated>2019-06-03T08:25:49.000Z</updated>
         <summary type="html"><![CDATA[<p>据说阿里有一道面试题就是谈谈函数节流和函数防抖。 糟了，这可触碰到我的知识盲区了，好像听也没听过这2个东西，痛定思痛，赶紧学习学习。</p>
@@ -417,8 +417,8 @@ setInterval(debounce(boom,2000),1000)
     </entry>
     <entry>
         <title type="html"><![CDATA[【转】160行代码仿Vue实现极简双向绑定]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/">
+        <id>https://duanjiuzhou/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/zhuan-160-xing-dai-ma-fang-vue-shi-xian-ji-jian-shuang-xiang-bang-ding/">
         </link>
         <updated>2019-05-22T08:26:17.000Z</updated>
         <summary type="html"><![CDATA[<p>精简vue双向绑定机制，对于没有好好研究过这方面知识的同学来说，当然是很难的，接下来本文用160行代码带你实现一个极简的双向绑定机制。</p>
@@ -642,8 +642,8 @@ setInterval(debounce(boom,2000),1000)
     </entry>
     <entry>
         <title type="html"><![CDATA[vue基于hls.js的流媒体直播基本用法]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/vue-ji-yu-hlsjs-de-liu-mei-ti-zhi-bo-ji-ben-yong-fa/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/vue-ji-yu-hlsjs-de-liu-mei-ti-zhi-bo-ji-ben-yong-fa/">
+        <id>https://duanjiuzhou/mengff.github.io/post/vue-ji-yu-hlsjs-de-liu-mei-ti-zhi-bo-ji-ben-yong-fa/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/vue-ji-yu-hlsjs-de-liu-mei-ti-zhi-bo-ji-ben-yong-fa/">
         </link>
         <updated>2019-03-04T08:29:50.000Z</updated>
         <summary type="html"><![CDATA[<p>hls.js是一个实现HTTP Live Streaming客户端的JavaScript库。本篇主要介绍该插件的在vue中基本使用方法。</p>
@@ -875,8 +875,8 @@ this.hls.on(Hls.Events.ERROR, (data) =&gt; {
     </entry>
     <entry>
         <title type="html"><![CDATA[mysql操作 (五) 之SQL 高级数据操作]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-wu-zhi-sql-gao-ji-shu-ju-cao-zuo/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-wu-zhi-sql-gao-ji-shu-ju-cao-zuo/">
+        <id>https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-wu-zhi-sql-gao-ji-shu-ju-cao-zuo/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-wu-zhi-sql-gao-ji-shu-ju-cao-zuo/">
         </link>
         <updated>2018-10-18T08:29:20.000Z</updated>
         <summary type="html"><![CDATA[<p>本篇主要总结下mysql中的主键冲突、蠕虫复制、限制数量、查询条件判断、字段别名等使用方法。</p>
@@ -1144,8 +1144,8 @@ SELECT FOUND_ROWS();
     </entry>
     <entry>
         <title type="html"><![CDATA[mysql操作 (四) 之SQL 中文数据问题]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-si-zhi-sql-zhong-wen-shu-ju-wen-ti/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-si-zhi-sql-zhong-wen-shu-ju-wen-ti/">
+        <id>https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-si-zhi-sql-zhong-wen-shu-ju-wen-ti/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-si-zhi-sql-zhong-wen-shu-ju-wen-ti/">
         </link>
         <updated>2018-10-15T08:28:24.000Z</updated>
         <summary type="html"><![CDATA[<p>SQL 里中文数据问题的本质是字符集问题。计算机只能识别二进制，人类更多的是识别符号；需要有一个二进制与字符的对应关系（字符集）...</p>
@@ -1180,8 +1180,8 @@ set character_set_client = gbk;
     </entry>
     <entry>
         <title type="html"><![CDATA[js 判断数据类型四种方法]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/">
+        <id>https://duanjiuzhou/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/js-pan-duan-shu-ju-lei-xing-si-chong-fang-fa/">
         </link>
         <updated>2018-10-10T08:30:44.000Z</updated>
         <summary type="html"><![CDATA[<p>鉴于 js 是松散类型的，因此需有一种手段来检测给定变量的数据类型。对此Js 也提供多种方法，但遗憾的是，不同的方法得到的结果参差不齐。</p>
@@ -1274,8 +1274,8 @@ set character_set_client = gbk;
     </entry>
     <entry>
         <title type="html"><![CDATA[mysql操作 (三) 之SQL 数据操作]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-san-zhi-sql-shu-ju-cao-zuo/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-san-zhi-sql-shu-ju-cao-zuo/">
+        <id>https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-san-zhi-sql-shu-ju-cao-zuo/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-san-zhi-sql-shu-ju-cao-zuo/">
         </link>
         <updated>2018-10-04T08:26:26.000Z</updated>
         <summary type="html"><![CDATA[<p>本篇主要介绍mysql中的数据操作，一些基础的增删改查，常规的使用方法，一起来看吧。</p>
@@ -1348,8 +1348,8 @@ delete from my_student where sex = 'male';
     </entry>
     <entry>
         <title type="html"><![CDATA[mysql操作 (二) 之SQL 表操作（字段）]]></title>
-        <id>https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-er-zhi-sql-biao-cao-zuo-zi-duan/</id>
-        <link href="https://duanjiuzhou.github.io/mengff.github.io/post/mysql-cao-zuo-er-zhi-sql-biao-cao-zuo-zi-duan/">
+        <id>https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-er-zhi-sql-biao-cao-zuo-zi-duan/</id>
+        <link href="https://duanjiuzhou/mengff.github.io/post/mysql-cao-zuo-er-zhi-sql-biao-cao-zuo-zi-duan/">
         </link>
         <updated>2018-09-23T08:25:27.000Z</updated>
         <content type="html"><![CDATA[<h2 id="sql-表操作字段">SQL 表操作（字段）</h2>
