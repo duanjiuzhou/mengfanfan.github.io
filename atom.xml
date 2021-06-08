@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://mengff.github.io/</id>
+    <id>https://mengff.github.io</id>
     <title>孟饭饭的独立博客</title>
-    <updated>2021-06-08T14:14:35.419Z</updated>
+    <updated>2021-06-08T14:23:52.521Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://mengff.github.io/"/>
+    <link rel="alternate" href="https://mengff.github.io"/>
     <link rel="self" href="https://mengff.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://mengff.github.io/images/avatar.png</logo>
@@ -111,7 +111,7 @@ module.exports = {
 }
 </code></pre>
 <p>效果如下：</p>
-<figure data-type="image" tabindex="1"><img src="https://mengff.github.io//post-images/1590216132807.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://mengff.github.io/post-images/1590216132807.png" alt="" loading="lazy"></figure>
 <h3 id="commitlint-校验你的-message">Commitlint: 校验你的 message</h3>
 <p>commitlint: 可以帮助我们 lint commit messages, 如果我们提交的不符合指向的规范, 直接拒绝提交。</p>
 <pre><code>yarn add commitlint-config-cz @commitlint/cli --dev
@@ -166,7 +166,7 @@ module.exports = {
 </ul>
 <h4 id="原理说明">原理说明</h4>
 <h5 id="原理图">原理图🍥</h5>
-<figure data-type="image" tabindex="1"><img src="https://mengff.github.io//post-images/1590112364894.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://mengff.github.io/post-images/1590112364894.png" alt="" loading="lazy"></figure>
 <h5 id="状态参数">状态参数</h5>
 <pre><code>const dragData = 
 {
